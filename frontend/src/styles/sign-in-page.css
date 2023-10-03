@@ -1,0 +1,33 @@
+.container {
+  margin: 10vh auto;
+  width: 50%;
+}
+
+.title {
+  text-align: center;
+}
+
+form {
+  margin: 8vh auto 0;
+}
+
+.field {
+  width: 100%;
+  margin-top: 10px;
+  height: 2rem;
+}
+
+input[type="submit"] {
+  width: 10rem;
+  height: 2.5rem;
+  margin-top: 2rem;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: center;
+}
+
+.password-container {
+  margin-top: 1rem;
+}

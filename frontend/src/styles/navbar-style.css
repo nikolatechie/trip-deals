@@ -1,0 +1,27 @@
+nav {
+  width: 100%;
+  background-color: #fdca40;
+  margin: 0;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.navbar-content {
+  padding: 4px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+}
+
+.link-margin {
+  margin-right: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
