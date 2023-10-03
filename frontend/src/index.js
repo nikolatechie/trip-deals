@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {LandingPage} from "./routes/landing-page";
-import {SignInPage} from "./routes/sign-in-page";
+import SignInPage from "./routes/sign-in-page";
 import {ErrorPage} from "./routes/error-page";
 import {NewDealPage} from "./routes/new-deal-page";
 

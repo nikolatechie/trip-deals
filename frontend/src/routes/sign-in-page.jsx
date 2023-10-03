@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavBar } from "../components/navbar";
 import "../styles/sign-in-page.css";
 
-export const SignInPage = () => {
-  const handleSubmit = async (e) => {
+export default function SignInPage() {
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    alert("now");
+    // Request
+    console.log(data);
   };
 
   return (
@@ -18,11 +24,21 @@ export const SignInPage = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor='username'>Username</label>
-            <input className='field' type='text' id='username' />
+            <input
+              className='field'
+              type='text'
+              id='username'
+              onChange={(e) => setData({ ...data, username: e.target.value })}
+            />
           </div>
           <div className='password-container'>
             <label htmlFor='password'>Password</label>
-            <input className='field' type='password' id='password' />
+            <input
+              className='field'
+              type='password'
+              id='password'
+              onChange={(e) => setData({ ...data, password: e.target.value })}
+            />
           </div>
           <div className='submit-container'>
             <input type='submit' />
@@ -31,4 +47,4 @@ export const SignInPage = () => {
       </div>
     </div>
   );
-};
+}
