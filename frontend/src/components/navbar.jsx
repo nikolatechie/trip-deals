@@ -1,11 +1,19 @@
-import React from "react";
-import "../styles/navbar-style.css";
+import React, { useEffect, useState } from "react";
+import styles from "../styles/navbar-style.module.css";
 
-export const NavBar = () => {
+export default function NavBar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("username") !== null) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <header>
       <nav>
-        <div className='navbar-content'>
+        <div className={styles.navbarContent}>
           <div>
             <h2>
               <a href='/'>TripDeals</a>
@@ -14,12 +22,16 @@ export const NavBar = () => {
           <div>
             <ul>
               <li>
-                <a className='link-margin' href='/'>
+                <a className={styles.linkMargin} href='/'>
                   Browse deals
                 </a>
               </li>
               <li>
-                <a href='/sign-in'>Sign in</a>
+                {!isLoggedIn ? (
+                  <a href='/sign-in'>Sign in</a>
+                ) : (
+                  <a href='/sign-out'>Sign out</a>
+                )}
               </li>
             </ul>
           </div>
@@ -27,4 +39,4 @@ export const NavBar = () => {
       </nav>
     </header>
   );
-};
+}

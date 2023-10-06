@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { NavBar } from "../components/navbar";
-import "../styles/sign-in-page.css";
+import NavBar from "../components/navbar";
+import styles from "../styles/sign-in-page.module.css";
 
 export default function SignInPage() {
   const navigate = useNavigate();
@@ -41,30 +41,30 @@ export default function SignInPage() {
   return (
     <div>
       <NavBar />
-      <div className='container'>
-        <div className='title'>
+      <div className={styles.container}>
+        <div className={styles.title}>
           <h2>Admin sign in</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor='username'>Username</label>
             <input
-              className='field'
+              className={styles.field}
               type='text'
               id='username'
               onChange={(e) => setState({ ...state, username: e.target.value })}
             />
           </div>
-          <div className='password-container'>
+          <div className={styles.passwordContainer}>
             <label htmlFor='password'>Password</label>
             <input
-              className='field'
+              className={styles.field}
               type='password'
               id='password'
               onChange={(e) => setState({ ...state, password: e.target.value })}
             />
           </div>
-          <div className='submit-container'>
+          <div className={styles.submitContainer}>
             <input type='submit' />
           </div>
         </form>

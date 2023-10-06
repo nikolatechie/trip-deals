@@ -1,35 +1,28 @@
-.container {
-  margin: 10vh auto;
+.content {
   width: 50%;
+  margin: 8vh auto;
 }
 
 .title {
   text-align: center;
 }
 
-form {
-  margin: 8vh auto 0;
-}
-
 .field {
+  height: 2rem;
   width: 100%;
   margin-top: 10px;
-  height: 2rem;
+  margin-bottom: 1rem;
   padding-left: 10px;
   font-size: 1rem;
 }
 
-input[type="submit"] {
+button[type="submit"] {
   width: 10rem;
   height: 2.5rem;
   margin-top: 2rem;
 }
 
-.submit-container {
+.submitContainer {
   display: flex;
   justify-content: center;
-}
-
-.password-container {
-  margin-top: 1rem;
 }

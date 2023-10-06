@@ -1,5 +1,5 @@
 import React from "react";
-import { NavBar } from "../components/navbar";
+import NavBar from "../components/navbar";
 import "../styles/error-page.css";
 
 export const ErrorPage = () => {
