@@ -17,8 +17,12 @@ ul {
   display: flex;
 }
 
-.linkMargin {
-  margin-right: 20px;
+li {
+  margin-right: 30px;
+}
+
+li:last-child {
+  margin-right: 0;
 }
 
 a {

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { isUserSignedIn } from "../auth/auth.js";
 import styles from "../styles/navbar-style.module.css";
 
 export default function NavBar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("username") !== null) {
-      setIsLoggedIn(true);
-    }
+    setIsSignedIn(isUserSignedIn());
   }, []);
 
   return (
@@ -22,17 +21,22 @@ export default function NavBar() {
           <div>
             <ul>
               <li>
-                <a className={styles.linkMargin} href='/'>
-                  Browse deals
-                </a>
+                <a href='/'>Browse deals</a>
               </li>
-              <li>
-                {!isLoggedIn ? (
+              {!isSignedIn ? (
+                <li>
                   <a href='/sign-in'>Sign in</a>
-                ) : (
-                  <a href='/sign-out'>Sign out</a>
-                )}
-              </li>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <a href='/new-deal'>New Deal</a>
+                  </li>
+                  <li>
+                    <a href='/sign-out'>Sign out</a>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

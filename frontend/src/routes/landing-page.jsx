@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import NavBar from "../components/navbar";
-import styles from "../styles/landing-page.module.css";
+import styles from "../styles/deal-form.module.css";
 
-export const LandingPage = () => {
+export default function LandingPage() {
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(undefined);
+  const [endDate, setEndDate] = useState(null);
   const [travelers, setTravelers] = useState(1);
+  const [maxPrice, setMaxPrice] = useState(100);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -51,9 +52,18 @@ export const LandingPage = () => {
             type='number'
             min={1}
             max={20}
-            placeholder='Number of Travelers'
             value={travelers}
             onChange={(e) => setTravelers(e.target.value)}
+          />
+          <label htmlFor='price'>Max Total Price (£)</label>
+          <input
+            className={styles.field}
+            id='price'
+            type='number'
+            min={0}
+            step={0.1}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
           />
           <div className={styles.submitContainer}>
             <button type='submit'>Search</button>
@@ -62,4 +72,4 @@ export const LandingPage = () => {
       </div>
     </>
   );
-};
+}
