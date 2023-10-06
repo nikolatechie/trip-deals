@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavBar } from "../components/navbar";
 import "../styles/sign-in-page.css";
 
 export default function SignInPage() {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -24,7 +26,9 @@ export default function SignInPage() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        // Sign in successful
+        localStorage.setItem("username", state.username);
+        navigate("/");
       } else {
         alert(data.errorMessage);
       }
