@@ -3,15 +3,35 @@ import { NavBar } from "../components/navbar";
 import "../styles/sign-in-page.css";
 
 export default function SignInPage() {
-  const [data, setData] = useState({
+  const [state, setState] = useState({
     username: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Request
-    console.log(data);
+    try {
+      const response = await fetch("http://localhost:80/api/login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: state.username,
+          password: state.password,
+        }),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+      } else {
+        alert(data.errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return (
@@ -28,7 +48,7 @@ export default function SignInPage() {
               className='field'
               type='text'
               id='username'
-              onChange={(e) => setData({ ...data, username: e.target.value })}
+              onChange={(e) => setState({ ...state, username: e.target.value })}
             />
           </div>
           <div className='password-container'>
@@ -37,7 +57,7 @@ export default function SignInPage() {
               className='field'
               type='password'
               id='password'
-              onChange={(e) => setData({ ...data, password: e.target.value })}
+              onChange={(e) => setState({ ...state, password: e.target.value })}
             />
           </div>
           <div className='submit-container'>
