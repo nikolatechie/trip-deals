@@ -4,13 +4,36 @@ import styles from "../styles/form.module.css";
 
 export default function NewDealPage() {
   const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [price, setPrice] = useState(100.0);
 
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
-    alert(destination);
+    try {
+      const response = await fetch("http://localhost:80/api/trip_deals.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          destination,
+          startDate,
+          endDate,
+          price,
+        }),
+      });
+
+      if (response.ok) {
+        alert("The deal has been saved successfully!");
+      } else {
+        const data = await response.json();
+        alert(data.errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return (
