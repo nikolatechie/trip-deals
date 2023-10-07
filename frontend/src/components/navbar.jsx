@@ -23,6 +23,9 @@ export default function NavBar() {
               <li>
                 <a href='/'>Browse deals</a>
               </li>
+              <li>
+                <a href='/contact'>Contact</a>
+              </li>
               {!isSignedIn ? (
                 <li>
                   <a href='/sign-in'>Sign in</a>

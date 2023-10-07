@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../components/navbar";
-import styles from "../styles/deal-form.module.css";
+import styles from "../styles/form.module.css";
 
 export default function LandingPage() {
   const [destination, setDestination] = useState("");

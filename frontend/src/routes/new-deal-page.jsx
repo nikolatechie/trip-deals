@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../components/navbar";
-import styles from "../styles/deal-form.module.css";
+import styles from "../styles/form.module.css";
 
 export default function NewDealPage() {
   const [destination, setDestination] = useState("");
@@ -8,7 +8,7 @@ export default function NewDealPage() {
   const [endDate, setEndDate] = useState(null);
   const [price, setPrice] = useState(100.0);
 
-  const handleSearch = (e) => {
+  const handleAdd = (e) => {
     e.preventDefault();
     alert(destination);
   };
@@ -18,12 +18,14 @@ export default function NewDealPage() {
       <NavBar />
       <div className={styles.content}>
         <h1 className={styles.title}>New deal</h1>
-        <form onSubmit={handleSearch}>
+        <form onSubmit={handleAdd}>
           <label htmlFor='destination'>Destination (City or Country)</label>
           <input
             className={styles.field}
             id='destination'
             type='text'
+            minLength={5}
+            maxLength={200}
             placeholder='Destination (City or Country)'
             value={destination}
             onChange={(e) => setDestination(e.target.value)}

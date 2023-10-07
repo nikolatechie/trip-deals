@@ -51,6 +51,8 @@ export default function SignInPage() {
             <input
               className={styles.field}
               type='text'
+              minLength={4}
+              maxLength={30}
               id='username'
               onChange={(e) => setState({ ...state, username: e.target.value })}
             />
@@ -60,6 +62,8 @@ export default function SignInPage() {
             <input
               className={styles.field}
               type='password'
+              minLength={5}
+              maxLength={40}
               id='password'
               onChange={(e) => setState({ ...state, password: e.target.value })}
             />

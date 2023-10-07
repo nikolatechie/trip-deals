@@ -16,6 +16,15 @@
   font-size: 1rem;
 }
 
+textarea {
+  resize: none;
+  width: 100%;
+  font-size: 1rem;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
 button[type="submit"] {
   width: 10rem;
   height: 2.5rem;
