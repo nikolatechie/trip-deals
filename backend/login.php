@@ -1,12 +1,7 @@
 <?php
 
 session_start();
-
-// Connecting to the database
-$conn = new mysqli("localhost", "root", "", "trip_deals");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once("db.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Extract body
@@ -41,10 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $stmt->close();
-    $conn->close();
 } else {
     http_response_code(405); // Method Not Allowed
     echo json_encode(array("errorMessage" => "Invalid request method."));
 }
 
-?>
+$conn->close();

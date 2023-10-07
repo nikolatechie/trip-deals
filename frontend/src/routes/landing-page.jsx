@@ -1,17 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../components/navbar";
+import { getCurrentDate } from "../helpers/date";
 import styles from "../styles/form.module.css";
 
 export default function LandingPage() {
   const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [fromDate, setfromDate] = useState("");
+  const [toDate, settoDate] = useState("");
   const [travelers, setTravelers] = useState(1);
-  const [maxPrice, setMaxPrice] = useState(100);
+  const [maxPrice, setMaxPrice] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
 
-  const handleSearch = (e) => {
+  useEffect(() => {
+    setCurrentDate(getCurrentDate());
+  }, []);
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    alert(destination + " " + travelers);
+    try {
+      const response = await fetch(
+        `http://localhost:80/api/trip_deals.php/?destination=${destination}&fromDate=${fromDate}&toDate=${toDate}&travelers=${travelers}&maxPrice=${maxPrice}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data.deals);
+      } else {
+        alert(data.errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return (
@@ -29,21 +55,25 @@ export default function LandingPage() {
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
           />
-          <label htmlFor='startDate'>From</label>
+          <label htmlFor='fromDate'>From</label>
           <input
             className={styles.field}
-            id='startDate'
+            id='fromDate'
             type='date'
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            required
+            value={fromDate}
+            min={currentDate}
+            onChange={(e) => setfromDate(e.target.value)}
           />
-          <label htmlFor='endDate'>To</label>
+          <label htmlFor='toDate'>To</label>
           <input
             className={styles.field}
-            id='endDate'
+            id='toDate'
             type='date'
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            required
+            value={toDate}
+            min={fromDate === "" ? currentDate : fromDate}
+            onChange={(e) => settoDate(e.target.value)}
           />
           <label htmlFor='travelers'>Number of Travelers</label>
           <input
@@ -52,6 +82,7 @@ export default function LandingPage() {
             type='number'
             min={1}
             max={20}
+            required
             value={travelers}
             onChange={(e) => setTravelers(e.target.value)}
           />
