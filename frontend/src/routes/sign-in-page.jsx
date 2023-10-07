@@ -53,6 +53,7 @@ export default function SignInPage() {
               type='text'
               minLength={4}
               maxLength={30}
+              required
               id='username'
               onChange={(e) => setState({ ...state, username: e.target.value })}
             />
@@ -64,6 +65,7 @@ export default function SignInPage() {
               type='password'
               minLength={5}
               maxLength={40}
+              required
               id='password'
               onChange={(e) => setState({ ...state, password: e.target.value })}
             />

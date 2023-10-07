@@ -7,9 +7,31 @@ export default function ContactPage() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSend = (e) => {
+  const handleSend = async (e) => {
     e.preventDefault();
-    alert("click");
+    try {
+      const response = await fetch("http://localhost:80/api/contact.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject,
+          email,
+          message,
+        }),
+      });
+
+      if (response.ok) {
+        alert("The message has been sent successfully!");
+      } else {
+        const data = await response.json();
+        alert(data.errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return (
@@ -25,6 +47,7 @@ export default function ContactPage() {
             type='text'
             minLength={3}
             maxLength={50}
+            required
             placeholder='Enter email subject'
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
@@ -36,6 +59,7 @@ export default function ContactPage() {
             type='email'
             minLength={5}
             maxLength={80}
+            required
             placeholder='Your email address'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -45,6 +69,7 @@ export default function ContactPage() {
             id='message'
             minLength={20}
             maxLength={1000}
+            required
             placeholder='Enter your message'
             rows={5}
             value={message}

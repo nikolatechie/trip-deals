@@ -49,6 +49,7 @@ export default function NewDealPage() {
             type='text'
             minLength={5}
             maxLength={200}
+            required
             placeholder='Destination (City or Country)'
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
@@ -58,6 +59,7 @@ export default function NewDealPage() {
             className={styles.field}
             id='startDate'
             type='date'
+            required
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
           />
@@ -66,6 +68,7 @@ export default function NewDealPage() {
             className={styles.field}
             id='endDate'
             type='date'
+            required
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
           />
@@ -76,6 +79,7 @@ export default function NewDealPage() {
             type='number'
             min={0}
             step={0.1}
+            required
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
