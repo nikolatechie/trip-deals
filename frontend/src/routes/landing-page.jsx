@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../components/navbar";
 import { getCurrentDate } from "../helpers/date";
 import styles from "../styles/form.module.css";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   const [destination, setDestination] = useState("");
   const [fromDate, setfromDate] = useState("");
   const [toDate, settoDate] = useState("");
@@ -17,27 +19,15 @@ export default function LandingPage() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        `http://localhost:80/api/trip_deals.php/?destination=${destination}&fromDate=${fromDate}&toDate=${toDate}&travelers=${travelers}&maxPrice=${maxPrice}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log(data.deals);
-      } else {
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
+    const data = {
+      destination,
+      fromDate,
+      toDate,
+      travelers,
+      maxPrice,
+    };
+    const dataParam = encodeURIComponent(JSON.stringify(data));
+    navigate(`/show-deals/?data=${dataParam}`);
   };
 
   return (

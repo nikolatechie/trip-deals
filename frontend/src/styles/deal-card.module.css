@@ -1,0 +1,63 @@
+.container {
+  width: 70%;
+  margin: 10vh auto;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.card {
+  color: white;
+  padding: 1rem;
+  background-color: rgb(50, 90, 164);
+  width: 15rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dealsTitle {
+  margin: 3rem 0;
+}
+
+.title {
+  text-align: center;
+  height: 4rem;
+}
+
+.dates {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.price {
+  text-align: center;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.btnCard {
+  height: 2rem;
+  width: 80%;
+  border: none;
+  background-color: #fdca40;
+  color: white;
+  font-weight: bolder;
+  border-radius: 1rem;
+  transition-duration: 0.2s;
+  margin: 1rem;
+}
+
+.btnCard:hover {
+  background-color: #ffbb00;
+  border: 1px solid black;
+}

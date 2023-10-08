@@ -8,6 +8,7 @@ import NewDealPage from "./routes/new-deal-page";
 import SignOut from "./routes/sign-out";
 import { ProtectedRoute } from "./routes/protected-route";
 import ContactPage from "./routes/contact-page";
+import ShowDealsPage from "./routes/show-deals-page";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         <NewDealPage />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/show-deals",
+    element: <ShowDealsPage />,
   },
   {
     path: "/contact",
