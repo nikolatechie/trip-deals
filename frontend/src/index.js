@@ -9,6 +9,7 @@ import SignOut from "./routes/sign-out";
 import { ProtectedRoute } from "./routes/protected-route";
 import ContactPage from "./routes/contact-page";
 import ShowDealsPage from "./routes/show-deals-page";
+import EditDealPage from "./routes/edit-deal-page";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,14 @@ const router = createBrowserRouter([
   {
     path: "/show-deals",
     element: <ShowDealsPage />,
+  },
+  {
+    path: "/edit-deal",
+    element: (
+      <ProtectedRoute>
+        <EditDealPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/contact",

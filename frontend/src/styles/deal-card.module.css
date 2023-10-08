@@ -42,22 +42,29 @@
 
 .btnContainer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.btnCard {
+.bookBtn {
+  background-color: #fdca40;
+}
+
+button {
   height: 2rem;
   width: 80%;
   border: none;
-  background-color: #fdca40;
   color: white;
   font-weight: bolder;
   border-radius: 1rem;
   transition-duration: 0.2s;
-  margin: 1rem;
+  margin-bottom: 0.8rem;
 }
 
-.btnCard:hover {
-  background-color: #ffbb00;
+button:hover {
   border: 1px solid black;
+}
+
+.bookBtn:hover {
+  background-color: #ffbb00;
 }

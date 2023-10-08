@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/navbar";
-import { DealCard } from "../components/deal-card";
+import DealCard from "../components/deal-card";
 import styles from "../styles/deal-card.module.css";
 
 const fetchDeals = async (formData) => {
@@ -64,6 +64,7 @@ export default function ShowDealsPage() {
               {deals.map((deal) => (
                 <DealCard
                   key={deal.id}
+                  id={deal.id}
                   destination={deal.destination}
                   fromDate={deal.fromDate}
                   toDate={deal.toDate}
