@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/navbar";
-import styles from "../styles/sign-in-page.module.css";
+import styles from "../styles/form.module.css";
 
 export default function SignInPage() {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export default function SignInPage() {
   return (
     <div>
       <NavBar />
-      <div className={styles.container}>
+      <div className={styles.content}>
         <div className={styles.title}>
           <h2>Admin sign in</h2>
         </div>
@@ -70,8 +70,10 @@ export default function SignInPage() {
               onChange={(e) => setState({ ...state, password: e.target.value })}
             />
           </div>
-          <div className={styles.submitContainer}>
-            <input type='submit' />
+          <div className={styles.btnContainer}>
+            <button className={styles.btn} type='submit'>
+              Sign in
+            </button>
           </div>
         </form>
       </div>

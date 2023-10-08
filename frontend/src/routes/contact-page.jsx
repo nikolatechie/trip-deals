@@ -75,8 +75,10 @@ export default function ContactPage() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <div className={styles.submitContainer}>
-            <button type='submit'>Send</button>
+          <div className={styles.btnContainer}>
+            <button className={styles.btn} type='submit'>
+              Send
+            </button>
           </div>
         </form>
       </div>

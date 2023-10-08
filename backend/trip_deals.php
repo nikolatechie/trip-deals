@@ -10,27 +10,36 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $to_date = $_GET["toDate"];
   $travelers = intval($_GET["travelers"]);
   $max_price = floatval($_GET["maxPrice"]);
-
-  // Select available deals
-  $stmt = $conn->prepare("SELECT * FROM deal WHERE NOT (? <= fromDate OR ? >= toDate)");
-  $stmt->bind_param("ss", $to_date, $from_date);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $deals = $result->fetch_all(MYSQLI_ASSOC);
+  $display_all = boolval($_GET["displayAll"]);
   $result_deals = [];
+  $stmt;
 
-  foreach ($deals as $deal) {
-    $deal_destination = strtolower($deal['destination']);
-    $min_date = max(new DateTime($from_date), new DateTime($deal['fromDate']));
-    $max_date = min(new DateTime($to_date), new DateTime($deal['toDate']));
-    $days_diff = date_diff($min_date, $max_date)->days;
-    $price_per_person = $deal['pricePerDay'];
-    $total_price = $travelers * $days_diff * $price_per_person;
+  if ($display_all) {
+    $stmt = $conn->prepare("SELECT * FROM deal ORDER BY toDate ASC");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $result_deals = $result->fetch_all(MYSQLI_ASSOC);
+  } else {
+    // Select available deals
+    $stmt = $conn->prepare("SELECT * FROM deal WHERE NOT (? <= fromDate OR ? >= toDate)");
+    $stmt->bind_param("ss", $to_date, $from_date);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $deals = $result->fetch_all(MYSQLI_ASSOC);
 
-    // Filter by destination and price
-    if ($destination !== "" && !str_contains($deal_destination, $destination)) continue;
-    if ($max_price > 0.0 && $total_price > $max_price + (0.05 * $max_price)) continue; // 5% threshold
-    array_push($result_deals, $deal);
+    foreach ($deals as $deal) {
+      $deal_destination = strtolower($deal['destination']);
+      $min_date = max(new DateTime($from_date), new DateTime($deal['fromDate']));
+      $max_date = min(new DateTime($to_date), new DateTime($deal['toDate']));
+      $days_diff = date_diff($min_date, $max_date)->days;
+      $price_per_person = $deal['pricePerDay'];
+      $total_price = $travelers * $days_diff * $price_per_person;
+
+      // Filter by destination and price
+      if ($destination !== "" && !str_contains($deal_destination, $destination)) continue;
+      if ($max_price > 0.0 && $total_price > $max_price + (0.05 * $max_price)) continue; // 5% threshold
+      array_push($result_deals, $deal);
+    }
   }
 
   header("Content-Type: application/json");

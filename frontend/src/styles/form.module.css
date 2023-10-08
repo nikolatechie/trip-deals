@@ -25,13 +25,13 @@ textarea {
   padding-top: 10px;
 }
 
-button[type="submit"] {
-  width: 10rem;
-  height: 2.5rem;
-  margin-top: 2rem;
+.btn {
+  max-width: 12rem;
 }
 
-.submitContainer {
+.btnContainer {
+  margin-top: 1.5rem;
   display: flex;
   justify-content: center;
+  column-gap: 1rem;
 }

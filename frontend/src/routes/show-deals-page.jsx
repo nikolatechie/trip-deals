@@ -6,7 +6,7 @@ import styles from "../styles/deal-card.module.css";
 const fetchDeals = async (formData) => {
   try {
     const response = await fetch(
-      `http://localhost:80/api/trip_deals.php/?destination=${formData.destination}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&travelers=${formData.travelers}&maxPrice=${formData.maxPrice}`,
+      `http://localhost:80/api/trip_deals.php/?destination=${formData.destination}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&travelers=${formData.travelers}&maxPrice=${formData.maxPrice}&displayAll=${formData.displayAll}`,
       {
         method: "GET",
         headers: {

@@ -83,8 +83,10 @@ export default function NewDealPage() {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
-          <div className={styles.submitContainer}>
-            <button type='submit'>Add</button>
+          <div className={styles.btnContainer}>
+            <button className={styles.btn} type='submit'>
+              Add
+            </button>
           </div>
         </form>
       </div>

@@ -118,8 +118,10 @@ export default function EditDealPage() {
                 })
               }
             />
-            <div className={styles.submitContainer}>
-              <button type='submit'>Update</button>
+            <div className={styles.btnContainer}>
+              <button className={styles.btn} type='submit'>
+                Update
+              </button>
             </div>
           </form>
         </div>

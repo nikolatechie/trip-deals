@@ -17,8 +17,7 @@ export default function LandingPage() {
     setCurrentDate(getCurrentDate());
   }, []);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const showDeals = (displayAll) => {
     const data = {
       destination,
       fromDate,
@@ -26,8 +25,19 @@ export default function LandingPage() {
       travelers,
       maxPrice,
     };
+    data["displayAll"] = displayAll;
     const dataParam = encodeURIComponent(JSON.stringify(data));
     navigate(`/show-deals/?data=${dataParam}`);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    showDeals(false);
+  };
+
+  const showAll = (e) => {
+    e.preventDefault();
+    showDeals(true);
   };
 
   return (
@@ -86,8 +96,9 @@ export default function LandingPage() {
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
           />
-          <div className={styles.submitContainer}>
+          <div className={styles.btnContainer}>
             <button type='submit'>Search</button>
+            <button onClick={(e) => showAll(e)}>Show all</button>
           </div>
         </form>
       </div>
