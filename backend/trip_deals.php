@@ -56,6 +56,27 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   }
 
   $stmt->close();
+} else if ($_SERVER["REQUEST_METHOD"] === "PUT") {
+  // Extract body
+  $data = json_decode(file_get_contents('php://input'), true);
+  $id = $data["id"];
+  $destination = $data["destination"];
+  $dateFrom = $data["fromDate"];
+  $dateTo = $data["toDate"];
+  $price = $data["price"];
+
+  // Update existing trip deal
+  $stmt = $conn->prepare("UPDATE deal SET destination=?, fromDate=?, toDate=?, pricePerDay=? WHERE id=?");
+  $stmt->bind_param("sssdd", $destination, $dateFrom, $dateTo, $price, $id);
+
+  if ($stmt->execute()) {
+    echo json_encode(["success" => true]);
+  } else {
+    http_response_code(500);
+    echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
+  }
+
+  $stmt->close();
 } else {
   http_response_code(405); // Method Not Allowed
   echo json_encode(array("errorMessage" => "Invalid request method."));

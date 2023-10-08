@@ -33,7 +33,7 @@ export default function NavBar() {
               ) : (
                 <>
                   <li>
-                    <a href='/new-deal'>New Deal</a>
+                    <a href='/new-deal'>New deal</a>
                   </li>
                   <li>
                     <a href='/sign-out'>Sign out</a>

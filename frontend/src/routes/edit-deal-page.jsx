@@ -19,8 +19,33 @@ export default function EditDealPage() {
     }
   }, []);
 
-  const handleUpdate = () => {
-    alert("update");
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:80/api/trip_deals.php", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: deal.id,
+          destination: deal.destination,
+          fromDate: deal.fromDate,
+          toDate: deal.toDate,
+          price: deal.price,
+        }),
+      });
+
+      if (response.ok) {
+        alert("The deal has been updated successfully!");
+      } else {
+        const data = await response.json();
+        alert(data.errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return (
@@ -45,7 +70,7 @@ export default function EditDealPage() {
               onChange={(e) =>
                 setDeal({
                   ...deal,
-                  destination: deal.destination,
+                  destination: e.target.value,
                 })
               }
             />
@@ -59,7 +84,7 @@ export default function EditDealPage() {
               onChange={(e) =>
                 setDeal({
                   ...deal,
-                  fromDate: deal.fromDate,
+                  fromDate: e.target.value,
                 })
               }
             />
@@ -73,7 +98,7 @@ export default function EditDealPage() {
               onChange={(e) =>
                 setDeal({
                   ...deal,
-                  toDate: deal.toDate,
+                  toDate: e.target.value,
                 })
               }
             />
@@ -89,7 +114,7 @@ export default function EditDealPage() {
               onChange={(e) =>
                 setDeal({
                   ...deal,
-                  price: deal.price,
+                  price: e.target.value,
                 })
               }
             />
