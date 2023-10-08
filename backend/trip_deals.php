@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $to_date = $_GET["toDate"];
   $travelers = intval($_GET["travelers"]);
   $max_price = floatval($_GET["maxPrice"]);
-  $display_all = boolval($_GET["displayAll"]);
+  $display_all = filter_var($_GET["displayAll"], FILTER_VALIDATE_BOOLEAN);
   $result_deals = [];
   $stmt;
 
