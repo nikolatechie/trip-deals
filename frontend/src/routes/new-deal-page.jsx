@@ -4,8 +4,8 @@ import styles from "../styles/form.module.css";
 
 export default function NewDealPage() {
   const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [fromDate, setfromDate] = useState("");
+  const [toDate, settoDate] = useState("");
   const [price, setPrice] = useState(100.0);
 
   const handleAdd = async (e) => {
@@ -18,8 +18,8 @@ export default function NewDealPage() {
         },
         body: JSON.stringify({
           destination,
-          startDate,
-          endDate,
+          fromDate,
+          toDate,
           price,
         }),
       });
@@ -54,23 +54,23 @@ export default function NewDealPage() {
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
           />
-          <label htmlFor='startDate'>From</label>
+          <label htmlFor='fromDate'>From</label>
           <input
             className={styles.field}
-            id='startDate'
+            id='fromDate'
             type='date'
             required
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            value={fromDate}
+            onChange={(e) => setfromDate(e.target.value)}
           />
-          <label htmlFor='endDate'>To</label>
+          <label htmlFor='toDate'>To</label>
           <input
             className={styles.field}
-            id='endDate'
+            id='toDate'
             type='date'
             required
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            value={toDate}
+            onChange={(e) => settoDate(e.target.value)}
           />
           <label htmlFor='price'>Price per Person (£)</label>
           <input
