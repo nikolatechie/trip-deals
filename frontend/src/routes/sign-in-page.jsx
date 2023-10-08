@@ -43,7 +43,7 @@ export default function SignInPage() {
       <NavBar />
       <div className={styles.content}>
         <div className={styles.title}>
-          <h2>Admin sign in</h2>
+          <h1>Admin sign in</h1>
         </div>
         <form onSubmit={handleSubmit}>
           <div>
