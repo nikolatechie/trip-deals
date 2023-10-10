@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { isUserSignedIn } from "../auth/auth.js";
+import { USER_ROLE, getUserRole } from "../auth/auth.js";
 import styles from "../styles/navbar-style.module.css";
 
 export default function NavBar() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
-    setIsSignedIn(isUserSignedIn());
+    setUserRole(getUserRole());
   }, []);
 
   return (
@@ -23,23 +23,21 @@ export default function NavBar() {
               <li>
                 <a href='/'>Browse deals</a>
               </li>
+              {userRole === USER_ROLE.ADMIN && (
+                <li>
+                  <a href='/new-deal'>New deal</a>
+                </li>
+              )}
               <li>
                 <a href='/contact'>Contact</a>
               </li>
-              {!isSignedIn ? (
-                <li>
+              <li>
+                {userRole === USER_ROLE.UNAUTHENTICATED ? (
                   <a href='/sign-in'>Sign in</a>
-                </li>
-              ) : (
-                <>
-                  <li>
-                    <a href='/new-deal'>New deal</a>
-                  </li>
-                  <li>
-                    <a href='/sign-out'>Sign out</a>
-                  </li>
-                </>
-              )}
+                ) : (
+                  <a href='/sign-out'>Sign out</a>
+                )}
+              </li>
             </ul>
           </div>
         </div>

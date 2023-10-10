@@ -10,6 +10,8 @@ import { ProtectedRoute } from "./routes/protected-route";
 import ContactPage from "./routes/contact-page";
 import ShowDealsPage from "./routes/show-deals-page";
 import EditDealPage from "./routes/edit-deal-page";
+import { USER_ROLE } from "./auth/auth";
+import { UnauthorisedPage } from "./routes/unauthorised-page";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
   {
     path: "/new-deal",
     element: (
-      <ProtectedRoute>
+      <ProtectedRoute roles={[USER_ROLE.ADMIN]}>
         <NewDealPage />
       </ProtectedRoute>
     ),
@@ -39,7 +41,7 @@ const router = createBrowserRouter([
   {
     path: "/edit-deal",
     element: (
-      <ProtectedRoute>
+      <ProtectedRoute roles={[USER_ROLE.ADMIN]}>
         <EditDealPage />
       </ProtectedRoute>
     ),
@@ -47,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <ContactPage />,
+  },
+  {
+    path: "/unauthorised",
+    element: <UnauthorisedPage />,
   },
   {
     path: "*",

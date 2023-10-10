@@ -2,13 +2,13 @@ import React from "react";
 import NavBar from "../components/navbar";
 import styles from "../styles/error-page.module.css";
 
-export const ErrorPage = () => {
+export const UnauthorisedPage = () => {
   return (
     <>
       <NavBar />
       <div className={styles.content}>
-        <h1>Error 404: Not Found</h1>
-        <h3>The requested page doesn't exist.</h3>
+        <h1>Error 401: Unauthorised</h1>
+        <h3>You are not authorised to visit this page.</h3>
       </div>
     </>
   );
