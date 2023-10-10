@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   echo json_encode(["deals" => $result_deals]);
   $stmt->close();
 } else if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  requireSignIn();
+  requireAdminSignIn();
   // Extract body
   $data = json_decode(file_get_contents('php://input'), true);
   $destination = $data["destination"];
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
   $stmt->close();
 } else if ($_SERVER["REQUEST_METHOD"] === "PUT") {
-  requireSignIn();
+  requireAdminSignIn();
   // Extract body
   $data = json_decode(file_get_contents('php://input'), true);
   $id = $data["id"];

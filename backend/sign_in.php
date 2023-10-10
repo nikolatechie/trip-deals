@@ -23,7 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($password, $hashed_password)) {
             // Passwords match
             $_SESSION['username'] = $username;
-            echo json_encode(["success" => true]);
+            $role = $row['role'];
+            $_SESSION['role'] = $role;
+            echo json_encode(["success" => true, "role" => $role]);
         } else {
             // Authentication failed
             http_response_code(401);

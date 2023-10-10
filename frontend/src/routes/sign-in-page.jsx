@@ -13,7 +13,7 @@ export default function SignInPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:80/api/login.php", {
+      const response = await fetch("http://localhost:80/api/sign_in.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +28,7 @@ export default function SignInPage() {
       if (response.ok) {
         // Sign in successful
         localStorage.setItem("username", state.username);
+        localStorage.setItem("role", data.role);
         navigate("/");
       } else {
         alert(data.errorMessage);
