@@ -59,6 +59,7 @@ button {
   border-radius: 1rem;
   transition-duration: 0.2s;
   margin-bottom: 0.8rem;
+  border: 1px solid transparent;
 }
 
 button:hover {

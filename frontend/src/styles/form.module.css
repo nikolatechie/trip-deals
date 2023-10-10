@@ -36,3 +36,29 @@ textarea {
   justify-content: center;
   column-gap: 1rem;
 }
+
+.bottomContainer {
+  margin-top: 5rem;
+}
+
+.contactTable {
+  border: solid 1px #ddeeee;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.contactTable thead th {
+  background-color: #fdca40;
+  padding: 10px;
+  text-align: left;
+}
+.contactTable tbody td {
+  border: solid 1px #ddeeee;
+  color: #333;
+  padding: 10px;
+}
+
+.contactTable button {
+  width: 100%;
+  margin: 0 auto;
+}

@@ -1,11 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/navbar";
 import styles from "../styles/form.module.css";
+import { isAdminSignedIn } from "../auth/auth";
 
 export default function ContactPage() {
   const [subject, setSubject] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [adminSignedIn, setAdminSignedIn] = useState(false);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch("http://localhost:80/api/contact.php", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+          setMessages(data.messages);
+        } else {
+          alert(data.errorMessage);
+        }
+      } catch (error) {
+        console.log(error);
+        alert(error);
+      }
+    };
+    setAdminSignedIn(isAdminSignedIn());
+    if (adminSignedIn) {
+      fetchMessages();
+    }
+  }, [adminSignedIn]);
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -23,7 +53,35 @@ export default function ContactPage() {
       });
 
       if (response.ok) {
-        alert("The message has been sent successfully!");
+        if (adminSignedIn) {
+          window.location.reload();
+        } else {
+          alert("The message has been sent successfully!");
+        }
+      } else {
+        const data = await response.json();
+        alert(data.errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
+
+  const remove = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:80/api/contact.php`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+
+      if (response.ok) {
+        setMessages(messages.filter((message) => message.id !== id));
       } else {
         const data = await response.json();
         alert(data.errorMessage);
@@ -81,6 +139,36 @@ export default function ContactPage() {
             </button>
           </div>
         </form>
+        {adminSignedIn && (
+          <div className={styles.bottomContainer}>
+            <table className={styles.contactTable}>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Subject</th>
+                  <th>Email</th>
+                  <th>Message</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {messages.map((msg, i) => (
+                  <tr key={i}>
+                    <td>{msg.id}</td>
+                    <td>{msg.subject}</td>
+                    <td>
+                      <a href={"mailto:" + msg.email}>{msg.email}</a>
+                    </td>
+                    <td>{msg.message}</td>
+                    <td>
+                      <button onClick={() => remove(msg.id)}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );
