@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { isUserSignedIn } from "../auth/auth";
+import { USER_ROLE, getUserRole } from "../auth/auth";
 import styles from "../styles/deal-card.module.css";
 
 export default function DealCard(props) {
   const navigate = useNavigate();
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [userRole, setUserRole] = useState(USER_ROLE.UNAUTHENTICATED);
 
   useEffect(() => {
-    setIsSignedIn(isUserSignedIn());
+    setUserRole(getUserRole());
   }, []);
 
   const handleEdit = () => {
@@ -34,10 +34,14 @@ export default function DealCard(props) {
         £{(props.travelers * props.price).toFixed(2)}/day
       </h3>
       <div className={styles.btnContainer}>
-        <button className={styles.bookBtn} onClick={() => alert("Booked!")}>
-          Book
-        </button>
-        {isSignedIn && <button onClick={() => handleEdit()}>Edit</button>}
+        {userRole !== USER_ROLE.UNAUTHENTICATED && (
+          <button className={styles.bookBtn} onClick={() => alert("Booked!")}>
+            Book
+          </button>
+        )}
+        {userRole === USER_ROLE.ADMIN && (
+          <button onClick={() => handleEdit()}>Edit</button>
+        )}
       </div>
     </div>
   );

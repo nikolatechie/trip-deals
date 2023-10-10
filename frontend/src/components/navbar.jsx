@@ -3,7 +3,7 @@ import { USER_ROLE, getUserRole } from "../auth/auth.js";
 import styles from "../styles/navbar-style.module.css";
 
 export default function NavBar() {
-  const [userRole, setUserRole] = useState("");
+  const [userRole, setUserRole] = useState(USER_ROLE.UNAUTHENTICATED);
 
   useEffect(() => {
     setUserRole(getUserRole());
@@ -20,14 +20,14 @@ export default function NavBar() {
           </div>
           <div>
             <ul>
-              <li>
-                <a href='/'>Browse deals</a>
-              </li>
               {userRole === USER_ROLE.ADMIN && (
                 <li>
                   <a href='/new-deal'>New deal</a>
                 </li>
               )}
+              <li>
+                <a href='/'>Browse deals</a>
+              </li>
               <li>
                 <a href='/contact'>Contact</a>
               </li>

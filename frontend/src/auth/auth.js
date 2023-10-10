@@ -13,9 +13,9 @@ export const getUserRole = () => {
 };
 
 export const isCustomerSignedIn = () => {
-  return localStorage.getItem("role") === "customer";
+  return localStorage.getItem("role") === USER_ROLE.CUSTOMER;
 };
 
 export const isAdminSignedIn = () => {
-  return localStorage.getItem("role") === "admin";
+  return localStorage.getItem("role") === USER_ROLE.ADMIN;
 };
