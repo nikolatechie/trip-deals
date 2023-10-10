@@ -10,7 +10,7 @@
 
 .field {
   height: 2rem;
-  width: 100%;
+  width: calc(100% - 1rem);
   margin-top: 10px;
   margin-bottom: 1rem;
   padding-left: 10px;
@@ -19,7 +19,7 @@
 
 textarea {
   resize: none;
-  width: 100%;
+  width: calc(100% - 1rem);
   font-size: 1rem;
   margin-top: 10px;
   padding-left: 10px;
@@ -42,6 +42,7 @@ textarea {
 }
 
 .contactTable {
+  width: 100%;
   border: solid 1px #ddeeee;
   border-collapse: collapse;
   border-spacing: 0;
@@ -52,6 +53,7 @@ textarea {
   padding: 10px;
   text-align: left;
 }
+
 .contactTable tbody td {
   border: solid 1px #ddeeee;
   color: #333;

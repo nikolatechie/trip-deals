@@ -69,6 +69,9 @@ export default function ContactPage() {
   };
 
   const remove = async (id) => {
+    if (!window.confirm("Are you sure?")) {
+      return;
+    }
     try {
       const response = await fetch(`http://localhost:80/api/contact.php`, {
         method: "DELETE",
