@@ -1,5 +1,6 @@
 <?php
 
+header("Content-Type: application/json");
 require_once("auth.php");
 require_once("db.php");
 
@@ -10,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $stmt->execute();
   $result = $stmt->get_result();
   $result_messages = $result->fetch_all(MYSQLI_ASSOC);
-  header("Content-Type: application/json");
   echo json_encode(["messages" => $result_messages]);
   $stmt->close();
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {

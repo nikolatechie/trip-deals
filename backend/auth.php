@@ -1,5 +1,7 @@
 <?php
 
+header("Content-Type: application/json");
+
 // Check if customer/admin is signed in
 session_start();
 

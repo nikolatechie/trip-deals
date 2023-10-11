@@ -1,5 +1,6 @@
 <?php
 
+header("Content-Type: application/json");
 require_once("auth.php");
 require_once("db.php");
 
@@ -42,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
   }
 
-  header("Content-Type: application/json");
   echo json_encode(["deals" => $result_deals]);
   $stmt->close();
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
