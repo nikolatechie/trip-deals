@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   header("Content-Type: application/json");
   echo json_encode(["deals" => $result_deals]);
   $stmt->close();
-} else if ($_SERVER["REQUEST_METHOD"] === "POST") {
+} elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
   requireAdminSignIn();
   // Extract body
   $data = json_decode(file_get_contents('php://input'), true);
@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   }
 
   $stmt->close();
-} else if ($_SERVER["REQUEST_METHOD"] === "PUT") {
+} elseif ($_SERVER["REQUEST_METHOD"] === "PUT") {
   requireAdminSignIn();
   // Extract body
   $data = json_decode(file_get_contents('php://input'), true);
@@ -79,6 +79,23 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   // Update existing trip deal
   $stmt = $conn->prepare("UPDATE deal SET destination=?, fromDate=?, toDate=?, pricePerDay=? WHERE id=?");
   $stmt->bind_param("sssdd", $destination, $dateFrom, $dateTo, $price, $id);
+
+  if ($stmt->execute()) {
+    echo json_encode(["success" => true]);
+  } else {
+    http_response_code(500);
+    echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
+  }
+
+  $stmt->close();
+} elseif ($_SERVER["REQUEST_METHOD"] === "DELETE") {
+  requireAdminSignIn();
+  // Extract ID
+  $data = json_decode(file_get_contents('php://input'), true);
+  $id = $data["id"];
+
+  $stmt = $conn->prepare("DELETE FROM deal WHERE id = ?");
+  $stmt->bind_param("d", $id);
 
   if ($stmt->execute()) {
     echo json_encode(["success" => true]);

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../components/navbar";
 import styles from "../styles/form.module.css";
 
 export default function EditDealPage() {
+  const navigate = useNavigate();
   const [deal, setDeal] = useState({
+    id: -1,
     destination: "",
     fromDate: "",
     toDate: "",
@@ -48,6 +51,34 @@ export default function EditDealPage() {
     }
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    if (!window.confirm("Are you sure?")) {
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:80/api/trip_deals.php", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: deal.id,
+        }),
+      });
+
+      if (response.ok) {
+        navigate(-1);
+      } else {
+        const data = await response.json();
+        alert(data.errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
+
   return (
     <>
       <NavBar />
@@ -56,7 +87,7 @@ export default function EditDealPage() {
       ) : (
         <div className={styles.content}>
           <h1 className={styles.title}>Update deal</h1>
-          <form onSubmit={handleUpdate}>
+          <form>
             <label htmlFor='destination'>Destination (City or Country)</label>
             <input
               className={styles.field}
@@ -119,8 +150,11 @@ export default function EditDealPage() {
               }
             />
             <div className={styles.btnContainer}>
-              <button className={styles.btn} type='submit'>
+              <button className={styles.btn} onClick={handleUpdate}>
                 Update
+              </button>
+              <button className={styles.dangerBtn} onClick={handleDelete}>
+                Remove
               </button>
             </div>
           </form>

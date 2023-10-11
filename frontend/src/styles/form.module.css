@@ -30,6 +30,12 @@ textarea {
   max-width: 12rem;
 }
 
+.dangerBtn {
+  max-width: 12rem;
+  background-color: red;
+  color: white;
+}
+
 .btnContainer {
   margin-top: 1.5rem;
   display: flex;

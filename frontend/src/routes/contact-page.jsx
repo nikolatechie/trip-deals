@@ -164,7 +164,12 @@ export default function ContactPage() {
                     </td>
                     <td>{msg.message}</td>
                     <td>
-                      <button onClick={() => remove(msg.id)}>Remove</button>
+                      <button
+                        className={styles.dangerBtn}
+                        onClick={() => remove(msg.id)}
+                      >
+                        Remove
+                      </button>
                     </td>
                   </tr>
                 ))}
