@@ -1,6 +1,6 @@
 <?php
 
-// Check if user/admin is signed in
+// Check if customer/admin is signed in
 session_start();
 
 function isCustomerSignedIn() {

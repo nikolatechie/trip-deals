@@ -13,12 +13,39 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   header("Content-Type: application/json");
   echo json_encode(["messages" => $result_messages]);
   $stmt->close();
-} else if ($_SERVER["REQUEST_METHOD"] === "POST") {
+} elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
   // Extract body
   $data = json_decode(file_get_contents('php://input'), true);
   $subject = $data["subject"];
   $email = $data["email"];
   $message = $data["message"];
+
+  // Validation
+  require_once("validation.php");
+
+  if (!isValidLength($subject, 3, 50)) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Subject length must be between 3 and 50."]);
+    exit;
+  }
+
+  if (!isValidLength($email, 5, 80)) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Email length must be between 5 and 80."]);
+    exit;
+  }
+
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Invalid email format."]);
+    exit;
+  }
+
+  if (!isValidLength($message, 20, 1000)) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Message length must be between 20 and 1000."]);
+    exit;
+  }
 
   // Insert a new message into the database
   $stmt = $conn->prepare("INSERT INTO `contact`(`subject`, `email`, `message`) VALUES (?,?,?)");
@@ -32,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   }
 
   $stmt->close();
-} else if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
+} elseif ($_SERVER["REQUEST_METHOD"] === "DELETE") {
   requireAdminSignIn();
   // Extract ID
   $data = json_decode(file_get_contents("php://input"), true);

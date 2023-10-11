@@ -9,6 +9,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $data["username"];
     $password = $data["password"];
 
+    // Validation
+    require_once("validation.php");
+
+    if (!isValidLength($username, 4, 30)) {
+        http_response_code(400); // Bad Request
+        echo json_encode(["errorMessage" => "Username length must be between 4 and 30."]);
+        exit;
+    }
+
+    if (!isValidLength($password, 5, 40)) {
+        http_response_code(400); // Bad Request
+        echo json_encode(["errorMessage" => "Password length must be between 5 and 40."]);
+        exit;
+    }
+
     // Retrieve the user
     $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
     $stmt->bind_param("s", $username);

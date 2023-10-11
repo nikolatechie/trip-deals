@@ -54,6 +54,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $dateTo = $data["toDate"];
   $price = $data["price"];
 
+  // Validation
+  require_once("validation.php");
+
+  if (!isValidLength($destination, 5, 200)) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Destination length must be between 5 and 200."]);
+    exit;
+  }
+
   // Insert a new trip deal into the database
   $stmt = $conn->prepare("INSERT INTO `deal`(`destination`, `fromDate`, `toDate`, `pricePerDay`) VALUES (?,?,?,?)");
   $stmt->bind_param("sssd", $destination, $dateFrom, $dateTo, $price);
@@ -75,6 +84,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $dateFrom = $data["fromDate"];
   $dateTo = $data["toDate"];
   $price = $data["price"];
+
+  // Validation
+  require_once("validation.php");
+
+  if (!isValidLength($destination, 5, 200)) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Destination length must be between 5 and 200."]);
+    exit;
+  }
 
   // Update existing trip deal
   $stmt = $conn->prepare("UPDATE deal SET destination=?, fromDate=?, toDate=?, pricePerDay=? WHERE id=?");

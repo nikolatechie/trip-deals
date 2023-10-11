@@ -53,10 +53,9 @@ export default function ContactPage() {
       });
 
       if (response.ok) {
+        alert("The message has been sent successfully!");
         if (adminSignedIn) {
           window.location.reload();
-        } else {
-          alert("The message has been sent successfully!");
         }
       } else {
         const data = await response.json();
