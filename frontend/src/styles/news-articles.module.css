@@ -1,0 +1,12 @@
+.container {
+  width: 50%;
+  margin: 8vh auto;
+}
+
+article {
+  border: 1px;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  margin: 1rem;
+  background-color: #ddeeee;
+}

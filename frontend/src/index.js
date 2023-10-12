@@ -12,6 +12,7 @@ import ShowDealsPage from "./routes/show-deals-page";
 import EditDealPage from "./routes/edit-deal-page";
 import { USER_ROLE } from "./auth/auth";
 import { UnauthorisedPage } from "./routes/unauthorised-page";
+import NewsPage from "./routes/news-page";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/show-deals",
     element: <ShowDealsPage />,
+  },
+  {
+    path: "/news",
+    element: <NewsPage />,
   },
   {
     path: "/edit-deal",

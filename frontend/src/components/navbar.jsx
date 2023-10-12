@@ -26,7 +26,10 @@ export default function NavBar() {
                 </li>
               )}
               <li>
-                <a href='/'>Browse deals</a>
+                <a href='/'>Deals</a>
+              </li>
+              <li>
+                <a href='/news'>News</a>
               </li>
               <li>
                 <a href='/contact'>Contact</a>
