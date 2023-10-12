@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/navbar";
 import styles from "../styles/news-articles.module.css";
-import { NewsArticle } from "../components/news-article";
+import NewsArticle from "../components/news-article";
+
+const sanitiseDateTime = (dateTime) => {
+  const split = dateTime.split(" ");
+  return split.slice(0, 4).join(" ") + " at " + split[4].substr(0, 5);
+};
 
 export default function NewsPage() {
   const [loading, setLoading] = useState(true);
@@ -39,7 +44,6 @@ export default function NewsPage() {
   return (
     <>
       <NavBar />
-
       <div className={styles.container}>
         {loading ? (
           <h2>Loading...</h2>
@@ -54,7 +58,8 @@ export default function NewsPage() {
                 description={article.description}
                 url={article.url}
                 creator={article.creator}
-                pubDate={article.pub_date}
+                pubDate={sanitiseDateTime(article.pub_date)}
+                imgName={article.img_name}
               />
             ))}
           </>
