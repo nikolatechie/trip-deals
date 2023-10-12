@@ -28,3 +28,14 @@ CREATE TABLE `contact` (
 
 INSERT INTO `contact`(`subject`, `email`, `message`)
 VALUES ('Test subject', 'grujic.nikola.22@sinergija.ba', 'Test message field. Test message field. Test message field.')
+
+-- ARTICLE
+CREATE TABLE `article` (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(400) NOT NULL,
+    description VARCHAR(1000) NOT NULL,
+    url VARCHAR(400) NOT NULL,
+    creator VARCHAR(200) NOT NULL,
+    pub_date VARCHAR(20) NOT NULL,
+    img_name VARCHAR(50) NOT NULL
+);
