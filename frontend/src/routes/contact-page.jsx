@@ -131,7 +131,7 @@ export default function ContactPage() {
             maxLength={1000}
             required
             placeholder='Enter your message'
-            rows={5}
+            rows={10}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />

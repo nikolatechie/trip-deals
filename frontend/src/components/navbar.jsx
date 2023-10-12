@@ -21,9 +21,14 @@ export default function NavBar() {
           <div>
             <ul>
               {userRole === USER_ROLE.ADMIN && (
-                <li>
-                  <a href='/new-deal'>New deal</a>
-                </li>
+                <>
+                  <li>
+                    <a href='/new-deal'>New deal</a>
+                  </li>
+                  <li>
+                    <a href='/new-article'>New article</a>
+                  </li>
+                </>
               )}
               <li>
                 <a href='/'>Deals</a>

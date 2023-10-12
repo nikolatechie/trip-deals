@@ -4,85 +4,7 @@ header("Content-Type: application/json");
 require_once("auth.php");
 require_once("db.php");
 require_once("validation.php");
-
-function fetchTravelArticles(): array {
-  $data = file_get_contents("https://rss.nytimes.com/services/xml/rss/nyt/Travel.xml");
-  $data = simplexml_load_string($data);
-  $articles = array();
-
-  foreach ($data->channel->item as $item) {
-    $media = $item->children('http://search.yahoo.com/mrss/');
-    $dc = $item->children('http://purl.org/dc/elements/1.1/');
-
-    $title = (string)$item->title;
-    $link = (string)$item->link;
-    $description = (string)$item->description;
-    $pub_date = (string)$item->pubDate;
-    $img_url = (string)$media->content->attributes()['url'];
-    $creator = (string)$dc->creator;
-
-    // Validation
-    if (
-      $title === null || !isValidLength($title, 1, 400) ||
-      $link === null || !isValidLength($link, 10, 400) ||
-      $description === null || !isValidLength($description, 1, 1000) ||
-      $pub_date === null || !isValidLength($pub_date, 5, 40) ||
-      $img_url === null || !isValidLength($img_url, 10, 400) ||
-      $creator === null || !isValidLength($creator, 5, 200)
-    ) {
-      continue;
-    }
-
-    $articles[] = array(
-      "title" => $title,
-      "link" => $link,
-      "description" => $description,
-      "pub_date" => $pub_date,
-      "img_url" => $img_url,
-      "creator" => $creator
-    );
-  }
-
-  return $articles;
-}
-
-function downloadAndSaveImage($imageUrl) {
-  // Create a unique filename for the image
-  $filename = "./images/" . uniqid() . ".jpg";
-
-  // Download the image and save it to the specified filename
-  try {
-    file_put_contents($filename, file_get_contents($imageUrl));
-  } catch (Exception $_) {
-    return null;
-  }
-
-  return $filename;
-}
-
-function articleAlreadyExists($article, $conn) {
-  $stmt = $conn->prepare("SELECT * FROM article WHERE title=? AND pub_date=? AND creator=?");
-  $stmt->bind_param("sss", $article["title"], $article["pub_date"], $article["creator"]);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  return $result->num_rows > 0;
-}
-
-function addArticle($article, $conn) {
-  $stmt = $conn->prepare(
-    "INSERT INTO `article`(`title`, `description`, `url`, `creator`, `pub_date`, `img_name`) VALUES (?,?,?,?,?,?)"
-  );
-  $stmt->bind_param(
-    "ssssss",
-    $article["title"],
-    $article["description"],
-    $article["link"],
-    $article["creator"],
-    $article["pub_date"],
-    $article["img_name"]
-  );
-  $stmt->execute();
-}
+require_once("travel_news_helpers.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $articles_rss = fetchTravelArticles();
@@ -94,6 +16,53 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $img_name =  downloadAndSaveImage($article["img_url"]);
     $article["img_name"] = $img_name;
     addArticle($article, $conn);
+  }
+
+  echo json_encode(array("articles" => fetchAllFromDatabase($conn)));
+} elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
+  requireAdminSignIn();
+  // Extract body
+  $title = $_POST["title"];
+  $description = $_POST["description"];
+  $pub_date = date("D, j M Y G:i");
+  $image = $_FILES['image'];
+
+  // Validation
+  require_once("validation.php");
+
+  if (!isValidLength($title, 4, 400)) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Title length must be between 4 and 400."]);
+    exit;
+  }
+
+  if (!isValidLength($description, 4, 1000)) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Description length must be between 4 and 1000."]);
+    exit;
+  }
+
+  if ($image === null || strpos($image['type'], 'image/') !== 0) {
+    http_response_code(400); // Bad Request
+    echo json_encode(["errorMessage" => "Invalid file type! Please upload an image."]);
+    exit;
+  }
+
+  // Move image to images folder
+  $img_name = moveUploadedImage($image);
+
+  // Insert a new article into the database
+  $article = array(
+    "title" => $title, "description" => $description, "link" => null,
+    "creator" => $_SESSION["username"], "pub_date" => $pub_date, "img_name" => $img_name
+  );
+  $result = addArticle($article, $conn);
+
+  if ($result) {
+    echo json_encode(["success" => true]);
+  } else {
+    http_response_code(500);
+    echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
   }
 } else {
   http_response_code(405); // Method Not Allowed

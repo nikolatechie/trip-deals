@@ -70,3 +70,9 @@ textarea {
   width: 100%;
   margin: 0 auto;
 }
+
+.fileUpload {
+  margin: 1rem 0 3rem;
+  display: flex;
+  column-gap: 1rem;
+}

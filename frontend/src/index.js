@@ -13,6 +13,8 @@ import EditDealPage from "./routes/edit-deal-page";
 import { USER_ROLE } from "./auth/auth";
 import { UnauthorisedPage } from "./routes/unauthorised-page";
 import NewsPage from "./routes/news-page";
+import EditArticlePage from "./routes/edit-article-page";
+import NewArticlePage from "./routes/new-article-page";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,22 @@ const router = createBrowserRouter([
   {
     path: "/news",
     element: <NewsPage />,
+  },
+  {
+    path: "/new-article",
+    element: (
+      <ProtectedRoute roles={[USER_ROLE.ADMIN]}>
+        <NewArticlePage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/edit-article",
+    element: (
+      <ProtectedRoute roles={[USER_ROLE.ADMIN]}>
+        <EditArticlePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/edit-deal",
