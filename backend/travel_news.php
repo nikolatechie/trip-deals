@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     http_response_code(500);
     echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
   }
-} else if ($_SERVER["REQUEST_METHOD"] === "PATCH") {
+} elseif ($_SERVER["REQUEST_METHOD"] === "PATCH") {
   requireAdminSignIn();
   // Extract body
   $_PATCH = json_decode(file_get_contents('php://input'), true);
@@ -103,6 +103,27 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   if ($stmt->execute()) {
     if ($old_image !== null) {
       removeFile("./images/" . $old_image);
+    }
+    echo json_encode(["success" => true]);
+  } else {
+    http_response_code(500);
+    echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
+  }
+
+  $stmt->close();
+} elseif ($_SERVER["REQUEST_METHOD"] === "DELETE") {
+  requireAdminSignIn();
+  // Extract ID
+  $_DELETE = json_decode(file_get_contents('php://input'), true);
+  $id = $_DELETE["id"];
+  $img_name = $_DELETE["imgName"];
+
+  $stmt = $conn->prepare("DELETE FROM article WHERE id = ?");
+  $stmt->bind_param("d", $id);
+
+  if ($stmt->execute()) {
+    if ($img_name !== null) {
+      removeFile("./images/" . $img_name);
     }
     echo json_encode(["success" => true]);
   } else {

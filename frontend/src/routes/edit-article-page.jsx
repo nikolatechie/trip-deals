@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../components/navbar";
 import styles from "../styles/form.module.css";
 
 export default function EditArticlePage() {
+  const navigate = useNavigate();
   const [article, setArticle] = useState(undefined);
 
   useEffect(() => {
@@ -92,12 +94,34 @@ export default function EditArticlePage() {
     updateArticle(imgName);
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
     if (!window.confirm("Are you sure?")) {
       return;
     }
-    // TODO: complete later
+
+    try {
+      const response = await fetch("http://localhost:80/api/travel_news.php", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: article.id,
+          imgName: article.imgName,
+        }),
+      });
+
+      if (response.ok) {
+        navigate(-1);
+      } else {
+        const data = await response.json();
+        alert(data.errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return (
