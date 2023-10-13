@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { isAdminSignedIn } from "../auth/auth.js";
 import styles from "../styles/news-articles.module.css";
 
 export default function NewsArticle(props) {
+  const navigate = useNavigate();
   const [adminSignedIn, setAdminSignedIn] = useState(false);
 
   useEffect(() => {
@@ -10,7 +12,14 @@ export default function NewsArticle(props) {
   }, []);
 
   const handleEdit = () => {
-    alert("click");
+    const data = {
+      id: props.id,
+      title: props.title,
+      description: props.description,
+      imgName: props.imgName,
+    };
+    const dataParam = encodeURIComponent(JSON.stringify(data));
+    navigate(`/edit-article/?data=${dataParam}`);
   };
 
   return (

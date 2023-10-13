@@ -54,6 +54,7 @@ export default function NewsPage() {
             {articles.map((article) => (
               <NewsArticle
                 key={article.id}
+                id={article.id}
                 title={article.title}
                 description={article.description}
                 url={article.url}

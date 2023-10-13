@@ -17,6 +17,8 @@ function fetchTravelArticles(): array {
     $creator = (string)$dc->creator;
 
     // Validation
+    require_once("validation.php");
+
     if (
       $title === null || !isValidLength($title, 1, 400) ||
       $link === null || !isValidLength($link, 10, 400) ||
@@ -100,4 +102,8 @@ function moveUploadedImage($image) {
     exit;
   }
   return $img_name;
+}
+
+function removeFile($file) {
+  unlink($file);
 }
