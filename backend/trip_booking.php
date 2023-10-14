@@ -3,8 +3,14 @@
 header("Content-Type: application/json");
 require_once("db.php");
 require_once("auth.php");
+require_once("trip_booking_helpers.php");
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+  requireUserSignIn();
+  $user_id = getUserId($conn);
+  $bookings = getUserBookings($user_id, $conn);
+  echo json_encode(array("bookings" => $bookings));
+} else if ($_SERVER["REQUEST_METHOD"] === "POST") {
   requireUserSignIn();
   // Extract body
   $data = json_decode(file_get_contents('php://input'), true);
@@ -20,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     exit;
   }
 
-  require_once("trip_booking_helpers.php");
   $total_cost = $travelers * getDealPrice($id, $conn) * date_diff(new DateTime($from_date), new DateTime($to_date))->days;
 
   // Insert a new trip booking into the database

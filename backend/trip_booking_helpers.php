@@ -33,3 +33,29 @@ function getUserId($conn) {
   echo json_encode(["errorMessage" => "An error occurred while fetching the user ID."]);
   exit;
 }
+
+function getUserBookings($user_id, $conn) {
+  $stmt = $conn->prepare("SELECT * FROM booking WHERE user_id = ?");
+  $stmt->bind_param("d", $user_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $stmt->close();
+  $raw_bookings = $result->fetch_all(MYSQLI_ASSOC);
+  $bookings = [];
+
+  foreach ($raw_bookings as $booking) {
+    $stmt = $conn->prepare("SELECT destination FROM deal WHERE id = ?");
+    $stmt->bind_param("d", $booking["deal_id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    if ($result && $result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      $booking["destination"] = $row["destination"];
+      $bookings[] = $booking;
+    }
+  }
+
+  return $bookings;
+}

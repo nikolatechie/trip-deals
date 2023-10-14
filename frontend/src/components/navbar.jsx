@@ -30,6 +30,11 @@ export default function NavBar() {
                   </li>
                 </>
               )}
+              {userRole !== USER_ROLE.UNAUTHENTICATED && (
+                <li>
+                  <a href='/bookings'>Bookings</a>
+                </li>
+              )}
               <li>
                 <a href='/'>Home</a>
               </li>

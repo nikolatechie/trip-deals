@@ -17,6 +17,7 @@ import NewsPage from "./routes/news-page";
 import EditArticlePage from "./routes/edit-article-page";
 import NewArticlePage from "./routes/new-article-page";
 import BookDealPage from "./routes/book-deal-page";
+import BookingsPage from "./routes/bookings-page";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute roles={[USER_ROLE.ADMIN, USER_ROLE.CUSTOMER]}>
         <BookDealPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/bookings",
+    element: (
+      <ProtectedRoute roles={[USER_ROLE.ADMIN, USER_ROLE.CUSTOMER]}>
+        <BookingsPage />
       </ProtectedRoute>
     ),
   },
