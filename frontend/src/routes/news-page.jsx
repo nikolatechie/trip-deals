@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/navbar";
-import styles from "../styles/news-articles.module.css";
 import NewsArticle from "../components/news-article";
-
-const sanitiseDateTime = (dateTime) => {
-  const split = dateTime.split(" ");
-  return split.slice(0, 4).join(" ") + " at " + split[4].substr(0, 5);
-};
+import { sanitiseDateTime } from "../helpers/date";
+import styles from "../styles/news-articles.module.css";
 
 export default function NewsPage() {
   const [loading, setLoading] = useState(true);

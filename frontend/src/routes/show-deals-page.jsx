@@ -50,7 +50,6 @@ export default function ShowDealsPage() {
   return (
     <>
       <NavBar />
-
       <div className={styles.container}>
         {deals.length === 0 ? (
           <h2>No deals match the criteria!</h2>
@@ -66,10 +65,10 @@ export default function ShowDealsPage() {
                   key={deal.id}
                   id={deal.id}
                   destination={deal.destination}
-                  fromDate={deal.fromDate}
-                  toDate={deal.toDate}
+                  fromDate={deal.from_date}
+                  toDate={deal.to_date}
                   travelers={travelers}
-                  price={deal.pricePerDay}
+                  price={deal.price_per_day}
                 ></DealCard>
               ))}
             </div>

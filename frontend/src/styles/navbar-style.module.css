@@ -1,5 +1,8 @@
 nav {
   width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
   background-color: #fdca40;
   margin: 0;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);

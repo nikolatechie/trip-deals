@@ -1,106 +1,79 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/navbar";
-import { getCurrentDate } from "../helpers/date";
-import styles from "../styles/form.module.css";
+import DealCard from "../components/deal-card";
+import NewsArticle from "../components/news-article";
+import { sanitiseDateTime } from "../helpers/date";
+import styles from "../styles/landing-page.module.css";
 
 export default function LandingPage() {
-  const navigate = useNavigate();
-  const [destination, setDestination] = useState("");
-  const [fromDate, setfromDate] = useState("");
-  const [toDate, settoDate] = useState("");
-  const [travelers, setTravelers] = useState(1);
-  const [maxPrice, setMaxPrice] = useState("");
-  const [currentDate, setCurrentDate] = useState("");
+  const [deals, setDeals] = useState([]);
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    setCurrentDate(getCurrentDate());
-  }, []);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:80/api/landing_page.php`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
 
-  const showDeals = (displayAll) => {
-    const data = {
-      destination,
-      fromDate,
-      toDate,
-      travelers,
-      maxPrice,
+        if (response.ok) {
+          setDeals(data.deals);
+          setArticles(data.articles);
+        } else {
+          alert(data.errorMessage);
+        }
+      } catch (error) {
+        console.log(error);
+        alert(error);
+      }
     };
-    data["displayAll"] = displayAll;
-    const dataParam = encodeURIComponent(JSON.stringify(data));
-    navigate(`/show-deals/?data=${dataParam}`);
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    showDeals(false);
-  };
-
-  const showAll = (e) => {
-    e.preventDefault();
-    showDeals(true);
-  };
+    fetchData();
+  }, []);
 
   return (
     <>
       <NavBar />
       <div className={styles.content}>
-        <h1 className={styles.title}>Find the best deals!</h1>
-        <form onSubmit={handleSearch}>
-          <label htmlFor='destination'>Destination (City or Country)</label>
-          <input
-            className={styles.field}
-            id='destination'
-            type='text'
-            placeholder='Destination (City or Country)'
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          />
-          <label htmlFor='fromDate'>From</label>
-          <input
-            className={styles.field}
-            id='fromDate'
-            type='date'
-            required
-            value={fromDate}
-            min={currentDate}
-            onChange={(e) => setfromDate(e.target.value)}
-          />
-          <label htmlFor='toDate'>To</label>
-          <input
-            className={styles.field}
-            id='toDate'
-            type='date'
-            required
-            value={toDate}
-            min={fromDate === "" ? currentDate : fromDate}
-            onChange={(e) => settoDate(e.target.value)}
-          />
-          <label htmlFor='travelers'>Number of Travelers</label>
-          <input
-            className={styles.field}
-            id='travelers'
-            type='number'
-            min={1}
-            max={20}
-            required
-            value={travelers}
-            onChange={(e) => setTravelers(e.target.value)}
-          />
-          <label htmlFor='price'>Max Total Price (£)</label>
-          <input
-            className={styles.field}
-            id='price'
-            type='number'
-            min={0}
-            step={0.1}
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-          />
-          <div className={styles.btnContainer}>
-            <button type='submit'>Search</button>
-            <button onClick={(e) => showAll(e)}>Show all</button>
-          </div>
-        </form>
+        <div>
+          <h1>Thinking about holiday?</h1>
+          <h2>Find the best deals on our website!</h2>
+        </div>
+        <div className={styles.deals}>
+          {deals.map((deal) => (
+            <div key={deal.id}>
+              <DealCard
+                id={deal.id}
+                destination={deal.destination}
+                fromDate={deal.from_date}
+                toDate={deal.to_date}
+                travelers={1}
+                price={deal.price_per_day}
+              />
+            </div>
+          ))}
+        </div>
+        <div className={styles.articles}>
+          {articles.map((article) => (
+            <div key={article.id}>
+              <NewsArticle
+                id={article.id}
+                title={article.title}
+                description={article.description}
+                imgName={article.img_name}
+                url={article.url}
+                pubDate={sanitiseDateTime(article.pub_date)}
+                creator={article.creator}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

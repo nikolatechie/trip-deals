@@ -1,0 +1,20 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 60%;
+  margin: 15vh auto;
+}
+
+.deals {
+  display: flex;
+  column-gap: 2rem;
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.articles {
+  margin-top: 4rem;
+  max-width: 80%;
+}
