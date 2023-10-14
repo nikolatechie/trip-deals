@@ -11,6 +11,10 @@ export default function DealCard(props) {
     setUserRole(getUserRole());
   }, []);
 
+  const handleBook = () => {
+    navigate(`/book-deal/?data=${encodeURIComponent(JSON.stringify(props))}`);
+  };
+
   const handleEdit = () => {
     const data = {
       id: props.id,
@@ -35,12 +39,12 @@ export default function DealCard(props) {
       </h3>
       <div className={styles.btnContainer}>
         {userRole !== USER_ROLE.UNAUTHENTICATED && (
-          <button className={styles.bookBtn} onClick={() => alert("Booked!")}>
+          <button className={styles.bookBtn} onClick={handleBook}>
             Book
           </button>
         )}
         {userRole === USER_ROLE.ADMIN && (
-          <button onClick={() => handleEdit()}>Edit</button>
+          <button onClick={handleEdit}>Edit</button>
         )}
       </div>
     </div>

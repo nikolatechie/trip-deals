@@ -8,7 +8,7 @@ export default function SearchDealsPage() {
   const navigate = useNavigate();
   const [destination, setDestination] = useState("");
   const [fromDate, setfromDate] = useState("");
-  const [toDate, settoDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [travelers, setTravelers] = useState(1);
   const [maxPrice, setMaxPrice] = useState("");
   const [currentDate, setCurrentDate] = useState("");
@@ -73,7 +73,7 @@ export default function SearchDealsPage() {
             required
             value={toDate}
             min={fromDate === "" ? currentDate : fromDate}
-            onChange={(e) => settoDate(e.target.value)}
+            onChange={(e) => setToDate(e.target.value)}
           />
           <label htmlFor='travelers'>Number of Travelers</label>
           <input
@@ -84,7 +84,7 @@ export default function SearchDealsPage() {
             max={20}
             required
             value={travelers}
-            onChange={(e) => setTravelers(e.target.value)}
+            onChange={(e) => setTravelers(parseInt(e.target.value))}
           />
           <label htmlFor='price'>Max Total Price (£)</label>
           <input
@@ -94,7 +94,7 @@ export default function SearchDealsPage() {
             min={0}
             step={0.1}
             value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
+            onChange={(e) => setMaxPrice(parseFloat(e.target.value))}
           />
           <div className={styles.btnContainer}>
             <button type='submit'>Search</button>

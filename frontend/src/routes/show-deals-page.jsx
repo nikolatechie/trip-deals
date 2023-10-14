@@ -61,15 +61,16 @@ export default function ShowDealsPage() {
             </h2>
             <div className={styles.cardContainer}>
               {deals.map((deal) => (
-                <DealCard
-                  key={deal.id}
-                  id={deal.id}
-                  destination={deal.destination}
-                  fromDate={deal.from_date}
-                  toDate={deal.to_date}
-                  travelers={travelers}
-                  price={deal.price_per_day}
-                ></DealCard>
+                <div key={deal.id}>
+                  <DealCard
+                    id={deal.id}
+                    destination={deal.destination}
+                    fromDate={deal.from_date}
+                    toDate={deal.to_date}
+                    travelers={travelers}
+                    price={deal.price_per_day}
+                  ></DealCard>
+                </div>
               ))}
             </div>
           </>

@@ -16,6 +16,7 @@ import { UnauthorisedPage } from "./routes/unauthorised-page";
 import NewsPage from "./routes/news-page";
 import EditArticlePage from "./routes/edit-article-page";
 import NewArticlePage from "./routes/new-article-page";
+import BookDealPage from "./routes/book-deal-page";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
   {
     path: "/show-deals",
     element: <ShowDealsPage />,
+  },
+  {
+    path: "/book-deal",
+    element: (
+      <ProtectedRoute roles={[USER_ROLE.ADMIN, USER_ROLE.CUSTOMER]}>
+        <BookDealPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/news",

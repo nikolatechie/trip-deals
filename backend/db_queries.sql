@@ -44,11 +44,12 @@ CREATE TABLE `article` (
 CREATE TABLE booking (
     id INT NOT NULL AUTO_INCREMENT,
     deal_id INT,
-    adults INT,
-    children INT,
-    total_cost FLOAT,
-    from_date DATE,
-    to_date DATE,
+    user_id INT NOT NULL,
+    travelers INT NOT NULL,
+    total_cost FLOAT NOT NULL,
+    from_date DATE NOT NULL,
+    to_date DATE NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (deal_id) REFERENCES deal(id)
+    FOREIGN KEY (deal_id) REFERENCES deal(id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );

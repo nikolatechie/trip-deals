@@ -5,7 +5,7 @@ import styles from "../styles/form.module.css";
 export default function NewDealPage() {
   const [destination, setDestination] = useState("");
   const [fromDate, setfromDate] = useState("");
-  const [toDate, settoDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [price, setPrice] = useState(100.0);
 
   const handleAdd = async (e) => {
@@ -70,7 +70,7 @@ export default function NewDealPage() {
             type='date'
             required
             value={toDate}
-            onChange={(e) => settoDate(e.target.value)}
+            onChange={(e) => setToDate(e.target.value)}
           />
           <label htmlFor='price'>Price per Person (£)</label>
           <input
