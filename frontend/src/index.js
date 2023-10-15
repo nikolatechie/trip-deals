@@ -11,13 +11,14 @@ import { ProtectedRoute } from "./routes/ProtectedRoute";
 import ContactPage from "./routes/ContactPage";
 import ShowDealsPage from "./routes/ShowDealsPage";
 import EditDealPage from "./routes/EditDealPage";
-import { USER_ROLE } from "./auth/auth";
+import { USER_ROLE } from "./data/constants.js";
 import { UnauthorisedPage } from "./routes/UnauthorisedPage";
 import NewsPage from "./routes/NewsPage";
 import EditArticlePage from "./routes/EditArticlePage";
 import NewArticlePage from "./routes/NewArticlePage";
 import BookDealPage from "./routes/BookDealPage";
 import BookingsPage from "./routes/BookingsPage";
+import "./styles/global.css";
 
 const router = createBrowserRouter([
   {

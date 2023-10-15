@@ -1,0 +1,15 @@
+button {
+  height: 2rem;
+  width: 80%;
+  border: none;
+  color: white;
+  font-weight: bolder;
+  border-radius: 1rem;
+  transition-duration: 0.2s;
+  margin-bottom: 0.8rem;
+  border: 1px solid transparent;
+}
+
+button:hover {
+  border: 1px solid black;
+}

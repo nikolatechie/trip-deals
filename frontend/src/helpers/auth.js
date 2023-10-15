@@ -1,8 +1,4 @@
-export const USER_ROLE = {
-  UNAUTHENTICATED: null,
-  ADMIN: "admin",
-  CUSTOMER: "customer",
-};
+import { USER_ROLE } from "../data/constants.js";
 
 export const isUserSignedIn = () => {
   return localStorage.getItem("username") !== null;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { USER_ROLE, getUserRole } from "../auth/auth.js";
+import { USER_ROLE } from "../data/constants.js";
+import { getUserRole } from "../helpers/auth.js";
 import styles from "../styles/navbar.module.css";
 
 export default function NavBar() {

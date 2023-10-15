@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { getUserRole } from "../auth/auth.js";
+import { getUserRole } from "../helpers/auth.js";
 
 export const ProtectedRoute = (props) => {
   return props.roles.includes(getUserRole()) ? (

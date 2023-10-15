@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { USER_ROLE, getUserRole } from "../auth/auth";
+import { USER_ROLE } from "../data/constants.js";
+import { getUserRole } from "../helpers/auth.js";
 import styles from "../styles/deal-card.module.css";
 
 export default function DealCard(props) {
