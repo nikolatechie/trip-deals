@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/navbar";
-import NewsArticle from "../components/news-article";
+import NavBar from "../components/NavBar";
+import NewsArticle from "../components/NewsArticle";
 import { sanitiseDateTime } from "../helpers/date";
 import styles from "../styles/news-articles.module.css";
 

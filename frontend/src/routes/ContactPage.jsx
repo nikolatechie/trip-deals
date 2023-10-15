@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/navbar";
+import NavBar from "../components/NavBar";
 import styles from "../styles/form.module.css";
 import { isAdminSignedIn } from "../auth/auth";
 

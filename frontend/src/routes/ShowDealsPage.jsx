@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/navbar";
-import DealCard from "../components/deal-card";
+import NavBar from "../components/NavBar";
+import DealCard from "../components/DealCard";
 import styles from "../styles/deal-card.module.css";
 
 const fetchDeals = async (formData) => {

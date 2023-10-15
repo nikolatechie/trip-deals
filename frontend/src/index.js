@@ -1,28 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LandingPage from "./routes/landing-page";
-import SearchDealsPage from "./routes/search-deals-page";
-import SignInPage from "./routes/sign-in-page";
-import { ErrorPage } from "./routes/error-page";
-import NewDealPage from "./routes/new-deal-page";
-import SignOut from "./routes/sign-out";
-import { ProtectedRoute } from "./routes/protected-route";
-import ContactPage from "./routes/contact-page";
-import ShowDealsPage from "./routes/show-deals-page";
-import EditDealPage from "./routes/edit-deal-page";
+import HomePage from "./routes/HomePage";
+import DealsPage from "./routes/DealsPage";
+import SignInPage from "./routes/SignInPage";
+import { ErrorPage } from "./routes/ErrorPage";
+import NewDealPage from "./routes/NewDealPage";
+import SignOut from "./routes/SignOut";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
+import ContactPage from "./routes/ContactPage";
+import ShowDealsPage from "./routes/ShowDealsPage";
+import EditDealPage from "./routes/EditDealPage";
 import { USER_ROLE } from "./auth/auth";
-import { UnauthorisedPage } from "./routes/unauthorised-page";
-import NewsPage from "./routes/news-page";
-import EditArticlePage from "./routes/edit-article-page";
-import NewArticlePage from "./routes/new-article-page";
-import BookDealPage from "./routes/book-deal-page";
-import BookingsPage from "./routes/bookings-page";
+import { UnauthorisedPage } from "./routes/UnauthorisedPage";
+import NewsPage from "./routes/NewsPage";
+import EditArticlePage from "./routes/EditArticlePage";
+import NewArticlePage from "./routes/NewArticlePage";
+import BookDealPage from "./routes/BookDealPage";
+import BookingsPage from "./routes/BookingsPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
+    element: <HomePage />,
   },
   {
     path: "/sign-in",
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/search-deals",
-    element: <SearchDealsPage />,
+    element: <DealsPage />,
   },
   {
     path: "/show-deals",

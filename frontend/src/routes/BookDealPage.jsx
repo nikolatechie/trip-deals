@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "../components/navbar";
+import NavBar from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/form.module.css";
 

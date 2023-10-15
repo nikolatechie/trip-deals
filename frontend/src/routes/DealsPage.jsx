@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/navbar";
+import NavBar from "../components/NavBar";
 import { getCurrentDate } from "../helpers/date";
 import styles from "../styles/form.module.css";
 
-export default function SearchDealsPage() {
+export default function DealsPage() {
   const navigate = useNavigate();
   const [destination, setDestination] = useState("");
   const [fromDate, setfromDate] = useState("");

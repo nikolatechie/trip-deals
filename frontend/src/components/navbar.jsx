@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { USER_ROLE, getUserRole } from "../auth/auth.js";
-import styles from "../styles/navbar-style.module.css";
+import styles from "../styles/navbar.module.css";
 
 export default function NavBar() {
   const [userRole, setUserRole] = useState(USER_ROLE.UNAUTHENTICATED);
