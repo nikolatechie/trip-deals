@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { API_URL_BASE } from "../data/constants";
+import {
+  removeArticle,
+  saveArticleImage,
+  updateNewsArticle,
+} from "../services/newsService";
 import styles from "../styles/form.module.css";
 
 export default function EditArticlePage() {
@@ -30,24 +34,13 @@ export default function EditArticlePage() {
     const formData = new FormData();
     formData.append("image", image);
 
-    try {
-      const response = await fetch(`${API_URL_BASE}/article_image.php`, {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-
-      if (response.ok) {
-        return data.imgName;
-      } else {
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await saveArticleImage(formData);
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+      return null;
+    } else {
+      return response.imgName;
     }
-
-    return null;
   };
 
   const updateArticle = async (imgName) => {
@@ -62,21 +55,11 @@ export default function EditArticlePage() {
       body["newImage"] = imgName;
     }
 
-    try {
-      const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
-        method: "PATCH",
-        body: JSON.stringify(body),
-      });
-
-      if (response.ok) {
-        alert("The article has been updated successfully!");
-      } else {
-        const data = await response.json();
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await updateNewsArticle(body);
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+    } else {
+      alert("The article has been updated successfully!");
     }
   };
 
@@ -97,28 +80,14 @@ export default function EditArticlePage() {
     if (!window.confirm("Are you sure?")) {
       return;
     }
-
-    try {
-      const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: article.id,
-          imgName: article.imgName,
-        }),
-      });
-
-      if (response.ok) {
-        navigate(-1);
-      } else {
-        const data = await response.json();
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await removeArticle({
+      id: article.id,
+      imgName: article.imgName,
+    });
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+    } else {
+      navigate(-1);
     }
   };
 

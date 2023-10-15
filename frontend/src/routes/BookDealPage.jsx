@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
-import { API_URL_BASE } from "../data/constants";
+import { bookDeal } from "../services/dealService";
 import styles from "../styles/form.module.css";
 
 export default function BookDealPage() {
@@ -30,30 +30,17 @@ export default function BookDealPage() {
 
   const confirmBooking = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`${API_URL_BASE}/trip_booking.php`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: booking.id,
-          fromDate: booking.fromDate,
-          toDate: booking.toDate,
-          travelers: booking.travelers,
-        }),
-      });
-
-      if (response.ok) {
-        alert("The trip has been booked successfully!");
-        navigate("/bookings");
-      } else {
-        const data = await response.json();
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await bookDeal({
+      id: booking.id,
+      fromDate: booking.fromDate,
+      toDate: booking.toDate,
+      travelers: booking.travelers,
+    });
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+    } else {
+      alert("The trip has been booked successfully!");
+      navigate("/bookings");
     }
   };
 

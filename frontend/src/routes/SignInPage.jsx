@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { API_URL_BASE } from "../data/constants";
 import styles from "../styles/form.module.css";
+import { signIn } from "../services/authService";
 
 export default function SignInPage() {
   const navigate = useNavigate();
@@ -13,30 +13,16 @@ export default function SignInPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`${API_URL_BASE}/sign_in.php`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: state.username,
-          password: state.password,
-        }),
-      });
-      const data = await response.json();
-
-      if (response.ok) {
-        // Sign in successful
-        localStorage.setItem("username", state.username);
-        localStorage.setItem("role", data.role);
-        navigate("/");
-      } else {
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await signIn({
+      username: state.username,
+      password: state.password,
+    });
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+    } else {
+      localStorage.setItem("username", state.username);
+      localStorage.setItem("role", response.role);
+      navigate("/");
     }
   };
 

@@ -3,8 +3,8 @@ import NavBar from "../components/NavBar";
 import DealCard from "../components/DealCard";
 import NewsArticle from "../components/NewsArticle";
 import { sanitiseDateTime } from "../helpers/date";
-import { API_URL_BASE } from "../data/constants";
-import styles from "../styles/landing-page.module.css";
+import { fetchHomePageData } from "../services/homeService";
+import styles from "../styles/home-page.module.css";
 
 export default function HomePage() {
   const [deals, setDeals] = useState([]);
@@ -12,24 +12,12 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(`${API_URL_BASE}/landing_page.php`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-
-        if (response.ok) {
-          setDeals(data.deals);
-          setArticles(data.articles);
-        } else {
-          alert(data.errorMessage);
-        }
-      } catch (error) {
-        console.log(error);
-        alert(error);
+      const response = await fetchHomePageData();
+      if (response.errorMessage) {
+        alert(response.errorMessage);
+      } else {
+        setDeals(response.deals);
+        setArticles(response.articles);
       }
     };
     fetchData();

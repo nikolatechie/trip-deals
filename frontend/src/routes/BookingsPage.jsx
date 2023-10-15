@@ -1,35 +1,22 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import DealCard from "../components/DealCard";
-import { API_URL_BASE } from "../data/constants";
+import { fetchBookings } from "../services/dealService";
 import styles from "../styles/deal-card.module.css";
 
 export default function BookingsPage() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const response = await fetch(`${API_URL_BASE}/trip_booking.php`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        console.log(data);
-
-        if (response.ok) {
-          setBookings(data.bookings);
-        } else {
-          alert(data.errorMessage);
-        }
-      } catch (error) {
-        console.log(error);
-        alert(error);
+    const fetchAllBookings = async () => {
+      const response = await fetchBookings();
+      if (response.errorMessage) {
+        alert(response.errorMessage);
+      } else {
+        setBookings(response.bookings);
       }
     };
-    fetchBookings();
+    fetchAllBookings();
   }, []);
 
   return (

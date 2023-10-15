@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
-import { API_URL_BASE } from "../data/constants";
+import { createDeal } from "../services/dealService";
 import styles from "../styles/form.module.css";
 
 export default function NewDealPage() {
@@ -11,29 +11,16 @@ export default function NewDealPage() {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          destination,
-          fromDate,
-          toDate,
-          price,
-        }),
-      });
-
-      if (response.ok) {
-        alert("The deal has been saved successfully!");
-      } else {
-        const data = await response.json();
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await createDeal({
+      destination,
+      fromDate,
+      toDate,
+      price,
+    });
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+    } else {
+      alert("The deal has been saved successfully!");
     }
   };
 

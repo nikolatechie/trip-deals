@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { API_URL_BASE } from "../data/constants";
+import { removeDeal, updateDeal } from "../services/dealService";
 import styles from "../styles/form.module.css";
 
 export default function EditDealPage() {
@@ -25,30 +25,17 @@ export default function EditDealPage() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: deal.id,
-          destination: deal.destination,
-          fromDate: deal.fromDate,
-          toDate: deal.toDate,
-          price: deal.price,
-        }),
-      });
-
-      if (response.ok) {
-        alert("The deal has been updated successfully!");
-      } else {
-        const data = await response.json();
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await updateDeal({
+      id: deal.id,
+      destination: deal.destination,
+      fromDate: deal.fromDate,
+      toDate: deal.toDate,
+      price: deal.price,
+    });
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+    } else {
+      alert("The deal has been updated successfully!");
     }
   };
 
@@ -57,26 +44,11 @@ export default function EditDealPage() {
     if (!window.confirm("Are you sure?")) {
       return;
     }
-    try {
-      const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: deal.id,
-        }),
-      });
-
-      if (response.ok) {
-        navigate(-1);
-      } else {
-        const data = await response.json();
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await removeDeal(deal.id);
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+    } else {
+      navigate(-1);
     }
   };
 

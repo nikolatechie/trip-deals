@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import NewsArticle from "../components/NewsArticle";
 import { sanitiseDateTime } from "../helpers/date";
-import { API_URL_BASE } from "../data/constants";
+import { fetchNewsArticles } from "../services/newsService";
 import styles from "../styles/news-articles.module.css";
 
 export default function NewsPage() {
@@ -11,25 +11,12 @@ export default function NewsPage() {
 
   useEffect(() => {
     const fetchArticles = async () => {
-      try {
-        const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        setLoading(false);
-
-        if (response.ok) {
-          setArticles(data.articles);
-        } else {
-          alert(data.errorMessage);
-        }
-      } catch (error) {
-        setLoading(true);
-        console.log(error);
-        alert(error);
+      const response = await fetchNewsArticles();
+      setLoading(false);
+      if (response.errorMessage) {
+        alert(response.errorMessage);
+      } else {
+        setArticles(response.articles);
       }
     };
     fetchArticles();

@@ -1,34 +1,8 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import DealCard from "../components/DealCard";
-import { API_URL_BASE } from "../data/constants";
+import { fetchDeals } from "../services/dealService";
 import styles from "../styles/deal-card.module.css";
-
-const fetchDeals = async (formData) => {
-  try {
-    const response = await fetch(
-      `${API_URL_BASE}/trip_deals.php/?destination=${formData.destination}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&travelers=${formData.travelers}&maxPrice=${formData.maxPrice}&displayAll=${formData.displayAll}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await response.json();
-
-    if (response.ok) {
-      return data.deals;
-    } else {
-      alert(data.errorMessage);
-    }
-  } catch (error) {
-    console.log(error);
-    alert(error);
-  }
-
-  return [];
-};
 
 export default function ShowDealsPage() {
   const [travelers, setTravelers] = useState(1);
@@ -41,8 +15,12 @@ export default function ShowDealsPage() {
       if (dataParam) {
         const parsedData = JSON.parse(decodeURIComponent(dataParam));
         setTravelers(parsedData.travelers);
-        const fetchedDeals = await fetchDeals(parsedData);
-        setDeals(fetchedDeals);
+        const response = await fetchDeals(parsedData);
+        if (response.errorMessage) {
+          alert(response.errorMessage);
+        } else {
+          setDeals(response.deals);
+        }
       }
     };
     setFetchedDeals();

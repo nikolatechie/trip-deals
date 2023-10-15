@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
-import { API_URL_BASE } from "../data/constants";
+import { createArticle } from "../services/newsService";
 import styles from "../styles/form.module.css";
 
 export default function NewArticlePage() {
@@ -24,21 +24,11 @@ export default function NewArticlePage() {
     formData.append("description", description);
     formData.append("image", selectedImage);
 
-    try {
-      const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        alert("The article has been saved successfully!");
-      } else {
-        const data = await response.json();
-        alert(data.errorMessage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    const response = await createArticle(formData);
+    if (response.errorMessage) {
+      alert(response.errorMessage);
+    } else {
+      alert("The article has been saved successfully!");
     }
   };
 
