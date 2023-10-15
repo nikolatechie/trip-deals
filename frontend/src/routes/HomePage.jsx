@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import DealCard from "../components/DealCard";
 import NewsArticle from "../components/NewsArticle";
 import { sanitiseDateTime } from "../helpers/date";
+import { API_URL_BASE } from "../data/constants";
 import styles from "../styles/landing-page.module.css";
 
 export default function HomePage() {
@@ -12,15 +13,12 @@ export default function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:80/api/landing_page.php`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`${API_URL_BASE}/landing_page.php`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         const data = await response.json();
 
         if (response.ok) {

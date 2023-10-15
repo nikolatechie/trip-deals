@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { API_URL_BASE } from "../data/constants";
 import styles from "../styles/form.module.css";
 
 export default function EditDealPage() {
@@ -25,7 +26,7 @@ export default function EditDealPage() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:80/api/trip_deals.php", {
+      const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +58,7 @@ export default function EditDealPage() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:80/api/trip_deals.php", {
+      const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

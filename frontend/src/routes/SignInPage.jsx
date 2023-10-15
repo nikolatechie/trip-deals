@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { API_URL_BASE } from "../data/constants";
 import styles from "../styles/form.module.css";
 
 export default function SignInPage() {
@@ -13,7 +14,7 @@ export default function SignInPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:80/api/sign_in.php", {
+      const response = await fetch(`${API_URL_BASE}/sign_in.php`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

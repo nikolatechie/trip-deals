@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
+import { API_URL_BASE } from "../data/constants";
 import styles from "../styles/form.module.css";
 
 export default function NewArticlePage() {
@@ -24,7 +25,7 @@ export default function NewArticlePage() {
     formData.append("image", selectedImage);
 
     try {
-      const response = await fetch("http://localhost:80/api/travel_news.php", {
+      const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
         method: "POST",
         body: formData,
       });

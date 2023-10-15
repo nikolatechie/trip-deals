@@ -5,5 +5,5 @@ export const USER_ROLE = {
 };
 
 // Backend config
-export const PORT = 80;
-export const URL_BASE = `http://localhost:${PORT}/api`;
+const PORT = 80;
+export const API_URL_BASE = `http://localhost:${PORT}/api`;

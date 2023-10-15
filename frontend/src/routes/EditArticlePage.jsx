@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { API_URL_BASE } from "../data/constants";
 import styles from "../styles/form.module.css";
 
 export default function EditArticlePage() {
@@ -30,13 +31,10 @@ export default function EditArticlePage() {
     formData.append("image", image);
 
     try {
-      const response = await fetch(
-        "http://localhost:80/api/article_image.php",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch(`${API_URL_BASE}/article_image.php`, {
+        method: "POST",
+        body: formData,
+      });
       const data = await response.json();
 
       if (response.ok) {
@@ -65,7 +63,7 @@ export default function EditArticlePage() {
     }
 
     try {
-      const response = await fetch("http://localhost:80/api/travel_news.php", {
+      const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
         method: "PATCH",
         body: JSON.stringify(body),
       });
@@ -101,7 +99,7 @@ export default function EditArticlePage() {
     }
 
     try {
-      const response = await fetch("http://localhost:80/api/travel_news.php", {
+      const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

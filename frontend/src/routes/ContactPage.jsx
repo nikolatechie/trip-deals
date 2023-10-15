@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import styles from "../styles/form.module.css";
+import { API_URL_BASE } from "../data/constants";
 import { isAdminSignedIn } from "../helpers/auth";
 
 export default function ContactPage() {
@@ -13,7 +14,7 @@ export default function ContactPage() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch("http://localhost:80/api/contact.php", {
+        const response = await fetch(`${API_URL_BASE}/contact.php`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -40,7 +41,7 @@ export default function ContactPage() {
   const handleSend = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:80/api/contact.php", {
+      const response = await fetch(`${API_URL_BASE}/contact.php`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +73,7 @@ export default function ContactPage() {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:80/api/contact.php`, {
+      const response = await fetch(`${API_URL_BASE}/contact.php`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

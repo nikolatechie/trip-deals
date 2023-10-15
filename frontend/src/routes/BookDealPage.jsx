@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
+import { API_URL_BASE } from "../data/constants";
 import styles from "../styles/form.module.css";
 
 export default function BookDealPage() {
@@ -30,7 +31,7 @@ export default function BookDealPage() {
   const confirmBooking = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:80/api/trip_booking.php", {
+      const response = await fetch(`${API_URL_BASE}/trip_booking.php`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { API_URL_BASE } from "../data/constants";
 
 export default function SignOut() {
   const [isSignedOut, setIsSignedOut] = useState(false);
@@ -9,7 +10,7 @@ export default function SignOut() {
       localStorage.removeItem("username");
       localStorage.removeItem("role");
       try {
-        const response = await fetch("http://localhost:80/api/sign_out.php", {
+        const response = await fetch(`${API_URL_BASE}/sign_out.php`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

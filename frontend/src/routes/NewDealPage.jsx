@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
+import { API_URL_BASE } from "../data/constants";
 import styles from "../styles/form.module.css";
 
 export default function NewDealPage() {
@@ -11,7 +12,7 @@ export default function NewDealPage() {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:80/api/trip_deals.php", {
+      const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
