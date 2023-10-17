@@ -1,8 +1,8 @@
-import { API_URL_BASE } from "../data/constants";
+import { API_URL } from "../data/constants";
 
 export const bookDeal = async (body) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/trip_booking.php`, {
+    const response = await fetch(`${API_URL}/trip_booking`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export const bookDeal = async (body) => {
 
 export const fetchBookings = async () => {
   try {
-    const response = await fetch(`${API_URL_BASE}/trip_booking.php`, {
+    const response = await fetch(`${API_URL}/trip_booking`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export const fetchBookings = async () => {
 export const fetchDeals = async (formData) => {
   try {
     const response = await fetch(
-      `${API_URL_BASE}/trip_deals.php/?destination=${formData.destination}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&travelers=${formData.travelers}&maxPrice=${formData.maxPrice}&displayAll=${formData.displayAll}`,
+      `${API_URL}/trip_deals/?destination=${formData.destination}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&travelers=${formData.travelers}&maxPrice=${formData.maxPrice}&displayAll=${formData.displayAll}`,
       {
         method: "GET",
         headers: {
@@ -68,7 +68,7 @@ export const fetchDeals = async (formData) => {
 
 export const createDeal = async (body) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
+    const response = await fetch(`${API_URL}/trip_deals`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export const createDeal = async (body) => {
 
 export const updateDeal = async (body) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
+    const response = await fetch(`${API_URL}/trip_deals`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ export const updateDeal = async (body) => {
 
 export const removeDeal = async (id) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/trip_deals.php`, {
+    const response = await fetch(`${API_URL}/trip_deals`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

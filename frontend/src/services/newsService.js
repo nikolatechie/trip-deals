@@ -1,8 +1,8 @@
-import { API_URL_BASE } from "../data/constants";
+import { API_URL } from "../data/constants";
 
 export const saveArticleImage = async (formData) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/article_image.php`, {
+    const response = await fetch(`${API_URL}/article_image`, {
       method: "POST",
       body: formData,
     });
@@ -21,7 +21,7 @@ export const saveArticleImage = async (formData) => {
 
 export const fetchNewsArticles = async () => {
   try {
-    const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
+    const response = await fetch(`${API_URL}/travel_news`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export const fetchNewsArticles = async () => {
 
 export const updateNewsArticle = async (body) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
+    const response = await fetch(`${API_URL}/travel_news`, {
       method: "PATCH",
       body: JSON.stringify(body),
     });
@@ -60,7 +60,7 @@ export const updateNewsArticle = async (body) => {
 
 export const createArticle = async (formData) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
+    const response = await fetch(`${API_URL}/travel_news`, {
       method: "POST",
       body: formData,
     });
@@ -78,7 +78,7 @@ export const createArticle = async (formData) => {
 
 export const removeArticle = async (body) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/travel_news.php`, {
+    const response = await fetch(`${API_URL}/travel_news`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -1,8 +1,8 @@
-import { API_URL_BASE } from "../data/constants";
+import { API_URL } from "../data/constants";
 
 export const fetchMessages = async () => {
   try {
-    const response = await fetch(`${API_URL_BASE}/contact.php`, {
+    const response = await fetch(`${API_URL}/contact`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export const fetchMessages = async () => {
 
 export const sendMessage = async (body) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/contact.php`, {
+    const response = await fetch(`${API_URL}/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const sendMessage = async (body) => {
 
 export const removeMessage = async (id) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/contact.php`, {
+    const response = await fetch(`${API_URL}/contact`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

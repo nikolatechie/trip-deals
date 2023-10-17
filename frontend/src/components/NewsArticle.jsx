@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isAdminSignedIn } from "../helpers/auth.js";
-import { API_URL_BASE } from "../data/constants.js";
+import { API_URL } from "../data/constants.js";
 import styles from "../styles/news-articles.module.css";
 
 export default function NewsArticle(props) {
@@ -29,7 +29,7 @@ export default function NewsArticle(props) {
         <a href={props.url}>
           <img
             className={styles.articleImg}
-            src={`${API_URL_BASE}/article_image.php/?img_name=${props.imgName}`}
+            src={`${API_URL}/article_image/?img_name=${props.imgName}`}
             alt={props.title}
           />
         </a>

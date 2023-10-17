@@ -1,8 +1,8 @@
-import { API_URL_BASE } from "../data/constants";
+import { API_URL } from "../data/constants";
 
 export const signIn = async (body) => {
   try {
-    const response = await fetch(`${API_URL_BASE}/sign_in.php`, {
+    const response = await fetch(`${API_URL}/sign_in`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const signIn = async (body) => {
 
 export const signOut = async () => {
   try {
-    const response = await fetch(`${API_URL_BASE}/sign_out.php`, {
+    const response = await fetch(`${API_URL}/sign_out`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
