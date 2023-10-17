@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isAdminSignedIn } from "../helpers/auth.js";
-import { API_URL } from "../data/constants.js";
+import { API_URL } from "../config/backendConfig.js";
 import styles from "../styles/news-articles.module.css";
 
 export default function NewsArticle(props) {

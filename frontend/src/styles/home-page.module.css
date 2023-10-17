@@ -6,6 +6,10 @@
   margin: 15vh auto;
 }
 
+.title {
+  text-align: center;
+}
+
 .deals {
   display: flex;
   column-gap: 2rem;

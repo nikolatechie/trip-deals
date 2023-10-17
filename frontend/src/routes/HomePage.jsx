@@ -27,7 +27,7 @@ export default function HomePage() {
     <>
       <NavBar />
       <div className={styles.content}>
-        <div>
+        <div className={styles.title}>
           <h1>Thinking about holiday?</h1>
           <h2>Find the best deals on our website!</h2>
         </div>

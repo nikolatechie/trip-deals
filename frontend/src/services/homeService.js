@@ -1,4 +1,4 @@
-import { API_URL } from "../data/constants";
+import { API_URL } from "../config/backendConfig.js";
 
 export const fetchHomePageData = async () => {
   try {
