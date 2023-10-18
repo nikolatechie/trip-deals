@@ -1,6 +1,8 @@
 <?php
 
-function fetchTravelArticles(): array {
+require_once("./repository/article_repository.php");
+
+function fetchTravelArticles() {
   $data = file_get_contents("https://rss.nytimes.com/services/xml/rss/nyt/Travel.xml");
   $data = simplexml_load_string($data);
   $articles = [];
@@ -17,7 +19,7 @@ function fetchTravelArticles(): array {
     $creator = (string)$dc->creator;
 
     // Validation
-    require_once("./helpers/validation.php");
+    require_once("./helpers/validation_helpers.php");
 
     if (
       $title === null || !isValidLength($title, 1, 400) ||
@@ -43,9 +45,13 @@ function fetchTravelArticles(): array {
   return $articles;
 }
 
+function genRandImgName() {
+  return uniqid() . ".jpg";
+}
+
 function downloadAndSaveImage($image_url) {
   // Create a unique filename for the image
-  $filename = uniqid() . ".jpg";
+  $filename = genRandImgName();
   $path = "./images/" . $filename;
 
   // Download the image and save it to the specified filename
@@ -58,52 +64,46 @@ function downloadAndSaveImage($image_url) {
   return $filename;
 }
 
-function articleAlreadyExists($article, $db) {
-  $stmt = $db->prepare("SELECT * FROM article WHERE creator=? AND (pub_date=? OR title=?)");
-  $stmt->bind_param("sss", $article["creator"], $article["pub_date"], $article["title"]);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $stmt->close();
-  return $result->num_rows > 0;
+function articleAlreadyExists($article) {
+  return doesExist($article['creator'], $article['pub_date'], $article['title']);
 }
 
-function addArticle($article, $db) {
-  $stmt = $db->prepare(
-    "INSERT INTO `article`(`title`, `description`, `url`, `creator`, `pub_date`, `img_name`) VALUES (?,?,?,?,?,?)"
+function addArticle($article) {
+  return saveArticle(
+    $article['title'],
+    $article['description'],
+    $article['link'],
+    $article['creator'],
+    $article['pub_date'],
+    $article['img_name']
   );
-  $stmt->bind_param(
-    "ssssss",
-    $article["title"],
-    $article["description"],
-    $article["link"],
-    $article["creator"],
-    $article["pub_date"],
-    $article["img_name"]
-  );
-  $result = $stmt->execute();
-  $stmt->close();
-  return $result;
 }
 
-function fetchAllFromDatabase($db) {
-  $stmt = $db->prepare("SELECT * FROM article ORDER BY id DESC");
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $stmt->close();
-  return $result->fetch_all(MYSQLI_ASSOC);
+function fetchAllFromDatabase() {
+  return getAllArticles();
 }
 
-function moveUploadedImage($image) {
-  $img_name = uniqid() . ".jpg";
+function moveUploadedImage($image, $img_name) {
   $img_path = "./images/" . $img_name;
   if (!move_uploaded_file($image['tmp_name'], $img_path)) {
     http_response_code(500);
     echo json_encode(["errorMessage" => "An error occurred while saving the image."]);
     exit;
   }
-  return $img_name;
 }
 
 function removeFile($file) {
   unlink($file);
+}
+
+function editArticleAndImage($title, $description, $new_image, $id) {
+  return updateArticleAndImage($title, $description, $new_image, $id);
+}
+
+function editArticleOnly($title, $description, $id) {
+  return updateArticleOnly($title, $description, $id);
+}
+
+function deleteArticle($id) {
+  return delete($id);
 }

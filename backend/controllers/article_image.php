@@ -6,9 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $img_path = "./images/" . $img_name;
   readfile($img_path);
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
-  header("Content-Type: application/json");
   // Using POST request to save an image before updating an article because
   // PATCH request containing an image and JSON data is having problems in PHP
+  header("Content-Type: application/json");
   require_once("./helpers/auth_helpers.php");
   requireAdminSignIn();
   $image = $_FILES['image'];
@@ -22,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
   // Move image to images folder
   require_once("./helpers/travel_news_helpers.php");
-  $img_name = moveUploadedImage($image);
+  $img_name = genRandImgName();
+  moveUploadedImage($image, $img_name);
   echo json_encode(["imgName" => $img_name]);
 } else {
   http_response_code(405); // Method Not Allowed

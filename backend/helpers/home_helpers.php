@@ -1,13 +1,13 @@
 <?php
 
+require_once("./repository/deal_repository.php");
+require_once("./repository/article_repository.php");
 define("HOME_LIMIT", 5);
 
-function getDeals() {
-  require_once("./repository/deal_repository.php");
+function getTopDeals() {
   return getDealsWithLimit(HOME_LIMIT);
 }
 
-function getArticles() {
-  require_once("./repository/article_repository.php");
+function getTopArticles() {
   return getArticlesWithLimit(HOME_LIMIT);
 }

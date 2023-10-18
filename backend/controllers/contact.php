@@ -2,17 +2,12 @@
 
 header("Content-Type: application/json");
 require_once("./helpers/auth_helpers.php");
-require_once("./config/db.php");
+require_once("./helpers/contact_helpers.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   // Get all contact messages
   requireAdminSignIn();
-  $stmt = $db->prepare("SELECT * FROM contact");
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $result_messages = $result->fetch_all(MYSQLI_ASSOC);
-  echo json_encode(["messages" => $result_messages]);
-  $stmt->close();
+  echo json_encode(["messages" => getAllMessages()]);
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
   // Extract body
   $data = json_decode(file_get_contents('php://input'), true);
@@ -21,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $message = $data["message"];
 
   // Validation
-  require_once("./helpers/validation.php");
+  require_once("./helpers/validation_helpers.php");
 
   if (!isValidLength($subject, 3, 50)) {
     http_response_code(400); // Bad Request
@@ -47,38 +42,25 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     exit;
   }
 
-  // Insert a new message into the database
-  $stmt = $db->prepare("INSERT INTO `contact`(`subject`, `email`, `message`) VALUES (?,?,?)");
-  $stmt->bind_param("sss", $subject, $email, $message);
-
-  if ($stmt->execute()) {
+  if (insertNewMessage($subject, $email, $message)) {
     echo json_encode(["success" => true]);
   } else {
     http_response_code(500);
     echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
   }
-
-  $stmt->close();
 } elseif ($_SERVER["REQUEST_METHOD"] === "DELETE") {
   requireAdminSignIn();
   // Extract ID
   $data = json_decode(file_get_contents("php://input"), true);
   $id = $data['id'];
 
-  $stmt = $db->prepare("DELETE FROM contact WHERE ID = ?");
-  $stmt->bind_param("d", $id);
-
-  if ($stmt->execute()) {
+  if (removeMessage($id)) {
     echo json_encode(["success" => true]);
   } else {
     http_response_code(500);
     echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
   }
-
-  $stmt->close();
 } else {
   http_response_code(405); // Method Not Allowed
   echo json_encode(["errorMessage" => "Invalid request method."]);
 }
-
-$db->close();

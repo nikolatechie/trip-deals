@@ -1,14 +1,13 @@
 <?php
 
-header("Content-Type: application/json");
-require_once("./config/db.php");
 require_once("./helpers/auth_helpers.php");
 require_once("./helpers/trip_booking_helpers.php");
+header("Content-Type: application/json");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   requireUserSignIn();
-  $user_id = getUserId($db);
-  $bookings = getUserBookings($user_id, $db);
+  $user_id = getUserId();
+  $bookings = getUserBookings($user_id);
   echo json_encode(["bookings" => $bookings]);
 } else if ($_SERVER["REQUEST_METHOD"] === "POST") {
   requireUserSignIn();
@@ -26,23 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     exit;
   }
 
-  $total_cost = $travelers * getDealPrice($id, $db) * date_diff(new DateTime($from_date), new DateTime($to_date))->days;
-
-  // Insert a new trip booking into the database
-  $stmt = $db->prepare("INSERT INTO `booking`(`deal_id`, `user_id`, `travelers`, `total_cost`, `from_date`, `to_date`) VALUES (?,?,?,?,?,?)");
-  $stmt->bind_param("ddddss", $id, getUserId($db), $travelers, $total_cost, $from_date, $to_date);
-
-  if ($stmt->execute()) {
+  if (addBooking($id, $travelers, $from_date, $to_date)) {
     echo json_encode(["success" => true]);
   } else {
     http_response_code(500);
     echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
   }
-
-  $stmt->close();
 } else {
   http_response_code(405); // Method Not Allowed
   echo json_encode(["errorMessage" => "Invalid request method."]);
 }
-
-$db->close();

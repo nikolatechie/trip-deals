@@ -2,7 +2,6 @@
 
 header("Content-Type: application/json");
 require_once("./helpers/auth_helpers.php");
-require_once("./config/db.php");
 require_once("./helpers/travel_news_helpers.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
@@ -10,14 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
   // Add fetched articles to the database
   foreach ($articles_rss as $article) {
-    if (articleAlreadyExists($article, $db)) continue;
+    if (articleAlreadyExists($article)) continue;
     // Download and save the image
     $img_name =  downloadAndSaveImage($article["img_url"]);
     $article["img_name"] = $img_name;
-    addArticle($article, $db);
+    addArticle($article);
   }
 
-  echo json_encode(["articles" => fetchAllFromDatabase($db)]);
+  echo json_encode(["articles" => fetchAllFromDatabase()]);
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
   requireAdminSignIn();
   // Extract body
@@ -27,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $image = $_FILES['image'];
 
   // Validation
-  require_once("./helpers/validation.php");
+  require_once("./helpers/validation_helpers.php");
 
   if (!isValidLength($title, 4, 400)) {
     http_response_code(400); // Bad Request
@@ -48,16 +47,16 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   }
 
   // Move image to images folder
-  $img_name = moveUploadedImage($image);
+  $img_name = genRandImgName();
+  moveUploadedImage($image, $img_name);
 
   // Insert a new article into the database
   $article = [
     "title" => $title, "description" => $description, "link" => null,
     "creator" => $_SESSION["username"], "pub_date" => $pub_date, "img_name" => $img_name
   ];
-  $result = addArticle($article, $db);
 
-  if ($result) {
+  if (addArticle($article)) {
     echo json_encode(["success" => true]);
   } else {
     http_response_code(500);
@@ -74,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $new_image = $_PATCH["newImage"];
 
   // Validation
-  require_once("./helpers/validation.php");
+  require_once("./helpers/validation_helpers.php");
 
   if (!isValidLength($title, 4, 400)) {
     http_response_code(400); // Bad Request
@@ -88,19 +87,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     exit;
   }
 
-  // Update existing article
-  $stmt;
+  $result;
+
   if ($new_image !== null) {
-    // We need to update the image too
-    $stmt = $db->prepare("UPDATE article SET title=?, description=?, img_name=? WHERE id=?");
-    $stmt->bind_param("sssd", $title, $description, $new_image, $id);
+    $result = editArticleAndImage($title, $description, $new_image, $id);
   } else {
-    // We're just updating title and description
-    $stmt = $db->prepare("UPDATE article SET title=?, description=? WHERE id=?");
-    $stmt->bind_param("ssd", $title, $description, $id);
+    $result = editArticleOnly($title, $description, $id);
   }
 
-  if ($stmt->execute()) {
+  if ($result) {
     if ($old_image !== null) {
       removeFile("./images/" . $old_image);
     }
@@ -109,8 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     http_response_code(500);
     echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
   }
-
-  $stmt->close();
 } elseif ($_SERVER["REQUEST_METHOD"] === "DELETE") {
   requireAdminSignIn();
   // Extract ID
@@ -118,10 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $id = $_DELETE["id"];
   $img_name = $_DELETE["imgName"];
 
-  $stmt = $db->prepare("DELETE FROM article WHERE id = ?");
-  $stmt->bind_param("d", $id);
-
-  if ($stmt->execute()) {
+  if (deleteArticle($id)) {
     if ($img_name !== null) {
       removeFile("./images/" . $img_name);
     }
@@ -130,11 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     http_response_code(500);
     echo json_encode(["errorMessage" => "An error occurred while executing the query."]);
   }
-
-  $stmt->close();
 } else {
   http_response_code(405); // Method Not Allowed
   echo json_encode(["errorMessage" => "Invalid request method."]);
 }
-
-$db->close();

@@ -1,7 +1,9 @@
 <?php
 
+require_once("./config/db.php");
+
 function findByUsername($username) {
-  require_once("./config/db.php");
+  global $db;
   $stmt = $db->prepare("SELECT * FROM user WHERE username = ?");
   $stmt->bind_param("s", $username);
   $stmt->execute();
@@ -14,4 +16,22 @@ function findByUsername($username) {
   }
 
   return null;
+}
+
+function _getUserId() {
+  global $db;
+  $stmt = $db->prepare("SELECT id FROM user WHERE username = ?");
+  $stmt->bind_param("s", $_SESSION['username']);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $stmt->close();
+
+  if ($result && $result->num_rows === 1) {
+    $row = $result->fetch_assoc();
+    return $row['id'];
+  }
+
+  http_response_code(500);
+  echo json_encode(["errorMessage" => "An error occurred while fetching the user ID."]);
+  exit;
 }
