@@ -2,7 +2,6 @@
 
 function findByUsername($username) {
   require_once("./config/db.php");
-  // Retrieve the user
   $stmt = $db->prepare("SELECT * FROM user WHERE username = ?");
   $stmt->bind_param("s", $username);
   $stmt->execute();
