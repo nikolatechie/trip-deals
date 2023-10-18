@@ -1,7 +1,7 @@
 <?php
 
 header("Content-Type: application/json");
-require_once("./helpers/auth.php");
+require_once("./helpers/auth_helpers.php");
 require_once("./config/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
@@ -125,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $stmt->close();
 } else {
   http_response_code(405); // Method Not Allowed
-  echo json_encode(array("errorMessage" => "Invalid request method."));
+  echo json_encode(["errorMessage" => "Invalid request method."]);
 }
 
 $db->close();

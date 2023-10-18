@@ -3,7 +3,7 @@
 function fetchTravelArticles(): array {
   $data = file_get_contents("https://rss.nytimes.com/services/xml/rss/nyt/Travel.xml");
   $data = simplexml_load_string($data);
-  $articles = array();
+  $articles = [];
 
   foreach ($data->channel->item as $item) {
     $media = $item->children('http://search.yahoo.com/mrss/');
@@ -30,14 +30,14 @@ function fetchTravelArticles(): array {
       continue;
     }
 
-    $articles[] = array(
+    $articles[] = [
       "title" => $title,
       "link" => $link,
       "description" => $description,
       "pub_date" => $pub_date,
       "img_url" => $img_url,
       "creator" => $creator
-    );
+    ];
   }
 
   return $articles;

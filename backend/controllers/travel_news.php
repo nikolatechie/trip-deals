@@ -1,7 +1,7 @@
 <?php
 
 header("Content-Type: application/json");
-require_once("./helpers/auth.php");
+require_once("./helpers/auth_helpers.php");
 require_once("./config/db.php");
 require_once("./helpers/travel_news_helpers.php");
 
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     addArticle($article, $db);
   }
 
-  echo json_encode(array("articles" => fetchAllFromDatabase($db)));
+  echo json_encode(["articles" => fetchAllFromDatabase($db)]);
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
   requireAdminSignIn();
   // Extract body
@@ -51,10 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $img_name = moveUploadedImage($image);
 
   // Insert a new article into the database
-  $article = array(
+  $article = [
     "title" => $title, "description" => $description, "link" => null,
     "creator" => $_SESSION["username"], "pub_date" => $pub_date, "img_name" => $img_name
-  );
+  ];
   $result = addArticle($article, $db);
 
   if ($result) {
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $stmt->close();
 } else {
   http_response_code(405); // Method Not Allowed
-  echo json_encode(array("errorMessage" => "Invalid request method."));
+  echo json_encode(["errorMessage" => "Invalid request method."]);
 }
 
 $db->close();

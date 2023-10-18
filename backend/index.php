@@ -1,6 +1,5 @@
 <?php
 
-// Move to data/constants.php
 define("BASE_URL", "/api/");
 define("CONTROLLERS_PATH", "./controllers");
 
@@ -36,5 +35,5 @@ if (array_key_exists($request_path, $endpoints)) {
 } else {
   // Return a 404 Not Found response for unknown endpoints
   http_response_code(404);
-  echo json_encode(array('errorMessage' => 'Endpoint not found!'));
+  echo json_encode(['errorMessage' => 'Endpoint not found!']);
 }

@@ -20,10 +20,10 @@ function getArticles($db) {
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $deals = getDeals($db);
   $articles = getArticles($db);
-  echo json_encode(array("deals" => $deals, "articles" => $articles));
+  echo json_encode(["deals" => $deals, "articles" => $articles]);
 } else {
   http_response_code(405); // Method Not Allowed
-  echo json_encode(array("errorMessage" => "Invalid request method."));
+  echo json_encode(["errorMessage" => "Invalid request method."]);
 }
 
 $db->close();

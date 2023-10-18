@@ -1,8 +1,6 @@
 <?php
 
 header("Content-Type: application/json");
-
-// Check if user is signed in
 session_start();
 
 function isCustomerSignedIn() {
@@ -39,4 +37,24 @@ function requireUserSignIn() {
         echo json_encode(["errorMessage" => "You must be signed in!"]);
         exit;
     }
+}
+
+function signIn($username, $password) {
+    require_once("./repository/user_repository.php");
+    $user = findByUsername($username);
+
+    if ($user !== null) {
+        // User exists
+        $hashed_password = $user['password'];
+
+        if (password_verify($password, $hashed_password)) {
+            // Passwords match
+            session_start();
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = $user['role'];
+            return true;
+        }
+    }
+
+    return false;
 }

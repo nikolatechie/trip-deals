@@ -2,14 +2,14 @@
 
 header("Content-Type: application/json");
 require_once("./config/db.php");
-require_once("./helpers/auth.php");
+require_once("./helpers/auth_helpers.php");
 require_once("./helpers/trip_booking_helpers.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   requireUserSignIn();
   $user_id = getUserId($db);
   $bookings = getUserBookings($user_id, $db);
-  echo json_encode(array("bookings" => $bookings));
+  echo json_encode(["bookings" => $bookings]);
 } else if ($_SERVER["REQUEST_METHOD"] === "POST") {
   requireUserSignIn();
   // Extract body
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $stmt->close();
 } else {
   http_response_code(405); // Method Not Allowed
-  echo json_encode(array("errorMessage" => "Invalid request method."));
+  echo json_encode(["errorMessage" => "Invalid request method."]);
 }
 
 $db->close();
