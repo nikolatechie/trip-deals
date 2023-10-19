@@ -35,6 +35,21 @@ function getUserBookings($user_id) {
   return $bookings;
 }
 
+function getBookingsExceptUserId($user_id) {
+  $raw_bookings = getOtherBookings($user_id);
+  $bookings = [];
+
+  foreach ($raw_bookings as $booking) {
+    $destination = getDestination($booking['deal_id']);
+    if ($destination !== null) {
+      $booking['destination'] = $destination;
+      $bookings[] = $booking;
+    }
+  }
+
+  return $bookings;
+}
+
 function addBooking($id, $travelers, $from_date, $to_date) {
   $total_cost = $travelers * calculateBookingPrice($id) * date_diff(new DateTime($from_date), new DateTime($to_date))->days;
   return saveBooking($id, getUserId(), $travelers, $total_cost, $from_date, $to_date);

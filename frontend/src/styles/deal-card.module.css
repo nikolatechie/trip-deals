@@ -36,6 +36,7 @@
   justify-content: center;
 }
 
+.userId,
 .price,
 .travelers {
   text-align: center;

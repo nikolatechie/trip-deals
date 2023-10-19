@@ -31,6 +31,9 @@ export default function DealCard(props) {
   return (
     <div className={styles.card}>
       <h3 className={styles.title}>{props.destination}</h3>
+      {props.userId !== undefined && (
+        <h3 className={styles.userId}>User ID: {props.userId}</h3>
+      )}
       <div className={styles.dates}>
         <h4>From {props.fromDate}</h4>
         <h4>To {props.toDate}</h4>

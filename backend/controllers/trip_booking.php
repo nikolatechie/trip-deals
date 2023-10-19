@@ -7,8 +7,14 @@ require_once(HELPERS_PATH . "/trip_booking_helpers.php");
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   requireUserSignIn();
   $user_id = getUserId();
-  $bookings = getUserBookings($user_id);
-  echo json_encode(["bookings" => $bookings]);
+  $user_bookings = getUserBookings($user_id);
+  $other_bookings = [];
+
+  if (isAdminSignedIn()) {
+    $other_bookings = getBookingsExceptUserId($user_id);
+  }
+
+  echo json_encode(["userBookings" => $user_bookings, "otherBookings" => $other_bookings]);
 } else if ($_SERVER["REQUEST_METHOD"] === "POST") {
   requireUserSignIn();
   // Extract body

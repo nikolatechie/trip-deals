@@ -32,7 +32,10 @@ export const fetchBookings = async () => {
     const data = await response.json();
 
     if (response.ok) {
-      return { bookings: data.bookings };
+      return {
+        userBookings: data.userBookings,
+        otherBookings: data.otherBookings,
+      };
     } else {
       return { errorMessage: data.errorMessage };
     }
