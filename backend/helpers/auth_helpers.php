@@ -1,19 +1,20 @@
 <?php
 
-require_once("./repository/user_repository.php");
 header("Content-Type: application/json");
+require_once(DATA_PATH . "/auth_constants.php");
+require_once(REPOSITORY_PATH . "/user_repository.php");
 session_start();
 
 function isCustomerSignedIn() {
-  return isset($_SESSION['role']) && $_SESSION['role'] === "customer";
+  return isset($_SESSION[ROLE]) && $_SESSION[ROLE] === CUSTOMER;
 }
 
 function isAdminSignedIn() {
-  return isset($_SESSION['role']) && $_SESSION['role'] === "admin";
+  return isset($_SESSION[ROLE]) && $_SESSION[ROLE] === ADMIN;
 }
 
 function isUserSignedIn() {
-  return isset($_SESSION['role']);
+  return isset($_SESSION[ROLE]);
 }
 
 function requireCustomerSignIn() {
@@ -50,7 +51,7 @@ function signIn($username, $password) {
     if (password_verify($password, $hashed_password)) {
       // Passwords match
       $_SESSION['username'] = $username;
-      $_SESSION['role'] = $user['role'];
+      $_SESSION[ROLE] = $user[ROLE];
       return true;
     }
   }

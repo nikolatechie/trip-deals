@@ -1,6 +1,6 @@
 <?php
 
-require_once("./repository/article_repository.php");
+require_once(REPOSITORY_PATH . "/article_repository.php");
 
 function fetchTravelArticles() {
   $data = file_get_contents("https://rss.nytimes.com/services/xml/rss/nyt/Travel.xml");
@@ -19,7 +19,7 @@ function fetchTravelArticles() {
     $creator = (string)$dc->creator;
 
     // Validation
-    require_once("./helpers/validation_helpers.php");
+    require_once(HELPERS_PATH . "/validation_helpers.php");
 
     if (
       $title === null || !isValidLength($title, 1, 400) ||
@@ -52,7 +52,7 @@ function genRandImgName() {
 function downloadAndSaveImage($image_url) {
   // Create a unique filename for the image
   $filename = genRandImgName();
-  $path = "./images/" . $filename;
+  $path = IMAGES_DIR . $filename;
 
   // Download the image and save it to the specified filename
   try {
@@ -84,7 +84,7 @@ function fetchAllFromDatabase() {
 }
 
 function moveUploadedImage($image, $img_name) {
-  $img_path = "./images/" . $img_name;
+  $img_path = IMAGES_DIR . $img_name;
   if (!move_uploaded_file($image['tmp_name'], $img_path)) {
     http_response_code(500);
     echo json_encode(["errorMessage" => "An error occurred while saving the image."]);

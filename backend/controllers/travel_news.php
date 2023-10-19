@@ -1,8 +1,8 @@
 <?php
 
 header("Content-Type: application/json");
-require_once("./helpers/auth_helpers.php");
-require_once("./helpers/travel_news_helpers.php");
+require_once(HELPERS_PATH . "/auth_helpers.php");
+require_once(HELPERS_PATH . "/travel_news_helpers.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $articles_rss = fetchTravelArticles();
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $image = $_FILES['image'];
 
   // Validation
-  require_once("./helpers/validation_helpers.php");
+  require_once(HELPERS_PATH . "/validation_helpers.php");
 
   if (!isValidLength($title, 4, 400)) {
     http_response_code(400); // Bad Request
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $new_image = $_PATCH["newImage"];
 
   // Validation
-  require_once("./helpers/validation_helpers.php");
+  require_once(HELPERS_PATH . "/validation_helpers.php");
 
   if (!isValidLength($title, 4, 400)) {
     http_response_code(400); // Bad Request
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
   if ($result) {
     if ($old_image !== null) {
-      removeFile("./images/" . $old_image);
+      removeFile(IMAGES_DIR . $old_image);
     }
     echo json_encode(["success" => true]);
   } else {
@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
   if (deleteArticle($id)) {
     if ($img_name !== null) {
-      removeFile("./images/" . $img_name);
+      removeFile(IMAGES_DIR . $img_name);
     }
     echo json_encode(["success" => true]);
   } else {

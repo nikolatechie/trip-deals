@@ -1,8 +1,8 @@
 <?php
 
-require_once("./repository/user_repository.php");
-require_once("./repository/booking_repository.php");
-require_once("./repository/deal_repository.php");
+require_once(REPOSITORY_PATH . "/user_repository.php");
+require_once(REPOSITORY_PATH . "/booking_repository.php");
+require_once(REPOSITORY_PATH . "/deal_repository.php");
 
 function calculateBookingPrice($id) {
   $price_per_day = getPricePerDay($id);

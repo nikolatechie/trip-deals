@@ -1,6 +1,6 @@
 <?php
 
-require_once("./config/db.php");
+require_once(CONFIG_PATH . "/db.php");
 
 function getDealsWithLimit($limit) {
   global $db;

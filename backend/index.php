@@ -1,7 +1,7 @@
 <?php
 
+require_once("./data/paths.php");
 define("BASE_URL", "/api/");
-define("CONTROLLERS_PATH", "./controllers");
 
 // Get the request method and path
 $request_method = $_SERVER['REQUEST_METHOD'];

@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $password = $data["password"];
 
   // Validation
-  require_once("./helpers/validation_helpers.php");
+  require_once(HELPERS_PATH . "/validation_helpers.php");
 
   if (!isValidLength($username, 4, 30)) {
     http_response_code(400); // Bad Request
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     exit;
   }
 
-  require_once("./helpers/auth_helpers.php");
+  require_once(HELPERS_PATH . "/auth_helpers.php");
   if (signIn($username, $password)) {
     echo json_encode(["success" => true, "role" => $_SESSION['role']]);
   } else {

@@ -1,6 +1,6 @@
 <?php
 
-require_once("./repository/deal_repository.php");
+require_once(REPOSITORY_PATH . "/deal_repository.php");
 
 function getDeals($destination, $travelers, $from_date, $to_date, $max_price, $display_all) {
   $result_deals = [];

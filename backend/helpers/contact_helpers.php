@@ -1,6 +1,6 @@
 <?php
 
-require_once("./repository/contact_repository.php");
+require_once(REPOSITORY_PATH . "/contact_repository.php");
 
 function getAllMessages() {
   return findAllMessages();

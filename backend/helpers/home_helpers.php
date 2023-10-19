@@ -1,7 +1,7 @@
 <?php
 
-require_once("./repository/deal_repository.php");
-require_once("./repository/article_repository.php");
+require_once(REPOSITORY_PATH . "/deal_repository.php");
+require_once(REPOSITORY_PATH . "/article_repository.php");
 define("HOME_LIMIT", 5);
 
 function getTopDeals() {

@@ -1,8 +1,8 @@
 <?php
 
-require_once("./helpers/auth_helpers.php");
-require_once("./helpers/trip_booking_helpers.php");
 header("Content-Type: application/json");
+require_once(HELPERS_PATH . "/auth_helpers.php");
+require_once(HELPERS_PATH . "/trip_booking_helpers.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   requireUserSignIn();

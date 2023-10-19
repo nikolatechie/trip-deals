@@ -1,8 +1,8 @@
 <?php
 
-require_once("./helpers/auth_helpers.php");
-require_once("./helpers/deals_helpers.php");
 header("Content-Type: application/json");
+require_once(HELPERS_PATH . "/auth_helpers.php");
+require_once(HELPERS_PATH . "/deals_helpers.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   // Extract parameters
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $price = $data["price"];
 
   // Validation
-  require_once("./helpers/validation_helpers.php");
+  require_once(HELPERS_PATH . "/validation_helpers.php");
 
   if (!isValidLength($destination, 5, 200)) {
     http_response_code(400); // Bad Request
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $price = $data["price"];
 
   // Validation
-  require_once("./helpers/validation_helpers.php");
+  require_once(HELPERS_PATH . "/validation_helpers.php");
 
   if (!isValidLength($destination, 5, 200)) {
     http_response_code(400); // Bad Request

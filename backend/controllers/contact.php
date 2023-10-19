@@ -1,8 +1,8 @@
 <?php
 
 header("Content-Type: application/json");
-require_once("./helpers/auth_helpers.php");
-require_once("./helpers/contact_helpers.php");
+require_once(HELPERS_PATH . "/auth_helpers.php");
+require_once(HELPERS_PATH . "/contact_helpers.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   // Get all contact messages
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $message = $data["message"];
 
   // Validation
-  require_once("./helpers/validation_helpers.php");
+  require_once(HELPERS_PATH . "/validation_helpers.php");
 
   if (!isValidLength($subject, 3, 50)) {
     http_response_code(400); // Bad Request

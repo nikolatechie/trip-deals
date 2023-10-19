@@ -3,13 +3,13 @@
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   header('Content-Type: image/jpeg');
   $img_name = $_GET['img_name'];
-  $img_path = "./images/" . $img_name;
+  $img_path = IMAGES_DIR . $img_name;
   readfile($img_path);
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
   // Using POST request to save an image before updating an article because
   // PATCH request containing an image and JSON data is having problems in PHP
   header("Content-Type: application/json");
-  require_once("./helpers/auth_helpers.php");
+  require_once(HELPERS_PATH . "/auth_helpers.php");
   requireAdminSignIn();
   $image = $_FILES['image'];
 
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   }
 
   // Move image to images folder
-  require_once("./helpers/travel_news_helpers.php");
+  require_once(HELPERS_PATH . "/travel_news_helpers.php");
   $img_name = genRandImgName();
   moveUploadedImage($image, $img_name);
   echo json_encode(["imgName" => $img_name]);
