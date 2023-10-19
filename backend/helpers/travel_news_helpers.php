@@ -2,6 +2,10 @@
 
 require_once(REPOSITORY_PATH . "/article_repository.php");
 
+function getImage($img_path) {
+  readfile($img_path);
+}
+
 function fetchTravelArticles() {
   $data = file_get_contents("https://rss.nytimes.com/services/xml/rss/nyt/Travel.xml");
   $data = simplexml_load_string($data);

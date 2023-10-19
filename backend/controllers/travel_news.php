@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     exit;
   }
 
-  if ($image === null || strpos($image['type'], 'image/') !== 0) {
+  if (!isImage($image)) {
     http_response_code(400); // Bad Request
     echo json_encode(["errorMessage" => "Invalid file type! Please upload an image."]);
     exit;
