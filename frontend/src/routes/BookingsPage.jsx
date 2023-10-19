@@ -26,6 +26,18 @@ export default function BookingsPage() {
     fetchAllBookings();
   }, []);
 
+  const exportBookingsAsJson = () => {
+    const blob = new Blob([JSON.stringify(userBookings)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "my_bookings.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <>
       <NavBar />
@@ -33,12 +45,13 @@ export default function BookingsPage() {
         {userBookings.length === 0 ? (
           <h2>You have no bookings!</h2>
         ) : (
-          <>
-            <h2 className={styles.dealsTitle}>
+          <div className={styles.bookingsTitleContainer}>
+            <h2>
               You have {userBookings.length}{" "}
               {userBookings.length === 1 ? "booking!" : "bookings!"}
             </h2>
-          </>
+            <button onClick={exportBookingsAsJson}>Export as JSON</button>
+          </div>
         )}
         <div className={styles.cardContainer}>
           {userBookings.map((booking) => (
@@ -55,7 +68,6 @@ export default function BookingsPage() {
         </div>
         {adminSignedIn && (
           <>
-            <br />
             <br />
             <h2 className={styles.dealsTitle}>
               We found {otherBookings.length} other{" "}

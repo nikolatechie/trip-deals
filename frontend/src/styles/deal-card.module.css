@@ -25,6 +25,10 @@
   margin: 3rem 0;
 }
 
+.bookingsTitleContainer {
+  margin-bottom: 1rem;
+}
+
 .title {
   text-align: center;
   height: 4rem;
