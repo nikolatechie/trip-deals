@@ -18,6 +18,7 @@ if (str_ends_with($request_path, '/')) {
 
 // Define an array of supported API endpoints
 $endpoints = [
+  'register' => CONTROLLERS_PATH . '/register.php',
   'sign_in' => CONTROLLERS_PATH . '/sign_in.php',
   'sign_out' => CONTROLLERS_PATH . '/sign_out.php',
   'contact' => CONTROLLERS_PATH . '/contact.php',

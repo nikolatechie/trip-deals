@@ -2,6 +2,7 @@
 
 header("Content-Type: application/json");
 require_once(DATA_PATH . "/auth_constants.php");
+require_once(DATA_PATH . "/hash_constants.php");
 require_once(REPOSITORY_PATH . "/user_repository.php");
 session_start();
 
@@ -57,4 +58,13 @@ function signIn($username, $password) {
   }
 
   return false;
+}
+
+function register($username, $password) {
+  if (findByUsername($username) !== null) {
+    http_response_code(400);
+    echo json_encode(["errorMessage" => "The username is already in use."]);
+    exit;
+  }
+  return registerUser($username, password_hash($password, HASH_ALGO));
 }

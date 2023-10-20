@@ -35,3 +35,10 @@ function _getUserId() {
   echo json_encode(["errorMessage" => "An error occurred while fetching the user ID."]);
   exit;
 }
+
+function registerUser($username, $hashed_password) {
+  global $db;
+  $stmt = $db->prepare("INSERT INTO `user`(`username`, `password`) VALUES (?, ?)");
+  $stmt->bind_param("ss", $username, $hashed_password);
+  return $stmt->execute();
+}

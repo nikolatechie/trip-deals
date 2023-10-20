@@ -11,30 +11,35 @@ import { ProtectedRoute } from "./routes/ProtectedRoute";
 import ContactPage from "./routes/ContactPage";
 import ShowDealsPage from "./routes/ShowDealsPage";
 import EditDealPage from "./routes/EditDealPage";
-import { USER_ROLE } from "./data/constants.js";
+import { USER_ROLE, PATH } from "./data/constants.js";
 import { UnauthorisedPage } from "./routes/UnauthorisedPage";
 import NewsPage from "./routes/NewsPage";
 import EditArticlePage from "./routes/EditArticlePage";
 import NewArticlePage from "./routes/NewArticlePage";
 import BookDealPage from "./routes/BookDealPage";
 import BookingsPage from "./routes/BookingsPage";
+import RegistrationPage from "./routes/RegistrationPage";
 import "./styles/global.css";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: PATH.HOME_PAGE,
     element: <HomePage />,
   },
   {
-    path: "/sign-in",
+    path: PATH.REGISTRATION_PAGE,
+    element: <RegistrationPage />,
+  },
+  {
+    path: PATH.SIGN_IN_PAGE,
     element: <SignInPage />,
   },
   {
-    path: "/sign-out",
+    path: PATH.SIGN_OUT_PAGE,
     element: <SignOut />,
   },
   {
-    path: "/new-deal",
+    path: PATH.NEW_DEAL_PAGE,
     element: (
       <ProtectedRoute roles={[USER_ROLE.ADMIN]}>
         <NewDealPage />
@@ -42,15 +47,15 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/search-deals",
+    path: PATH.SEARCH_DEALS_PAGE,
     element: <DealsPage />,
   },
   {
-    path: "/show-deals",
+    path: PATH.SHOW_DEALS_PAGE,
     element: <ShowDealsPage />,
   },
   {
-    path: "/book-deal",
+    path: PATH.BOOK_DEAL_PAGE,
     element: (
       <ProtectedRoute roles={[USER_ROLE.ADMIN, USER_ROLE.CUSTOMER]}>
         <BookDealPage />
@@ -58,7 +63,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/bookings",
+    path: PATH.BOOKINGS_PAGE,
     element: (
       <ProtectedRoute roles={[USER_ROLE.ADMIN, USER_ROLE.CUSTOMER]}>
         <BookingsPage />
@@ -66,11 +71,11 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/news",
+    path: PATH.NEWS_PAGE,
     element: <NewsPage />,
   },
   {
-    path: "/new-article",
+    path: PATH.NEW_ARTICLE_PAGE,
     element: (
       <ProtectedRoute roles={[USER_ROLE.ADMIN]}>
         <NewArticlePage />
@@ -78,7 +83,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/edit-article",
+    path: PATH.EDIT_ARTICLE_PAGE,
     element: (
       <ProtectedRoute roles={[USER_ROLE.ADMIN]}>
         <EditArticlePage />
@@ -86,7 +91,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/edit-deal",
+    path: PATH.EDIT_DEAL_PAGE,
     element: (
       <ProtectedRoute roles={[USER_ROLE.ADMIN]}>
         <EditDealPage />
@@ -94,15 +99,15 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/contact",
+    path: PATH.CONTACT_PAGE,
     element: <ContactPage />,
   },
   {
-    path: "/unauthorised",
+    path: PATH.UNAUTHORISED_PAGE,
     element: <UnauthorisedPage />,
   },
   {
-    path: "*",
+    path: PATH.ERROR_PAGE,
     element: <ErrorPage />,
   },
 ]);

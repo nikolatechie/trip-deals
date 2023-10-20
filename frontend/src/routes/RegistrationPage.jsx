@@ -1,28 +1,30 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { signIn } from "../services/authService";
+import { PATH } from "../data/constants";
+import { register } from "../services/authService";
 import styles from "../styles/form.module.css";
 
-export default function SignInPage() {
+export default function RegistrationPage() {
   const navigate = useNavigate();
   const [state, setState] = useState({
     username: "",
     password: "",
+    repeatPassword: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await signIn({
+    const response = await register({
       username: state.username,
       password: state.password,
+      repeatPassword: state.repeatPassword,
     });
     if (response.errorMessage) {
       alert(response.errorMessage);
     } else {
-      localStorage.setItem("username", state.username);
-      localStorage.setItem("role", response.role);
-      navigate("/");
+      alert("Registration is successful!");
+      navigate(PATH.SIGN_IN_PAGE);
     }
   };
 
@@ -31,7 +33,7 @@ export default function SignInPage() {
       <NavBar />
       <div className={styles.content}>
         <div className={styles.title}>
-          <h1>Sign in</h1>
+          <h1>Register</h1>
         </div>
         <form onSubmit={handleSubmit}>
           <div>
@@ -58,9 +60,23 @@ export default function SignInPage() {
               onChange={(e) => setState({ ...state, password: e.target.value })}
             />
           </div>
+          <div className={styles.passwordContainer}>
+            <label htmlFor='repeatPassword'>Repeat password</label>
+            <input
+              className={styles.field}
+              type='password'
+              minLength={5}
+              maxLength={40}
+              required
+              id='repeatPassword'
+              onChange={(e) =>
+                setState({ ...state, repeatPassword: e.target.value })
+              }
+            />
+          </div>
           <div className={styles.btnContainer}>
             <button className={styles.btn} type='submit'>
-              Sign in
+              Register
             </button>
           </div>
         </form>

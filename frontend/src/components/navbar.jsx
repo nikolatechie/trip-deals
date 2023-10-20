@@ -48,13 +48,20 @@ export default function NavBar() {
               <li>
                 <a href='/contact'>Contact</a>
               </li>
-              <li>
-                {userRole === USER_ROLE.UNAUTHENTICATED ? (
-                  <a href='/sign-in'>Sign in</a>
-                ) : (
+              {userRole === USER_ROLE.UNAUTHENTICATED ? (
+                <>
+                  <li>
+                    <a href='/register'>Register</a>
+                  </li>
+                  <li>
+                    <a href='/sign-in'>Sign in</a>
+                  </li>
+                </>
+              ) : (
+                <li>
                   <a href='/sign-out'>Sign out</a>
-                )}
-              </li>
+                </li>
+              )}
             </ul>
           </div>
         </div>
