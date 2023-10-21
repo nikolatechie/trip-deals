@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isAdminSignedIn } from "../helpers/auth.js";
 import { API_URL } from "../config/backendConfig.js";
+import { PATH } from "../data/constants.js";
 import styles from "../styles/news-articles.module.css";
 
 export default function NewsArticle(props) {
@@ -20,7 +21,7 @@ export default function NewsArticle(props) {
       imgName: props.imgName,
     };
     const dataParam = encodeURIComponent(JSON.stringify(data));
-    navigate(`/edit-article/?data=${dataParam}`);
+    navigate(`${PATH.EDIT_ARTICLE_PAGE}/?data=${dataParam}`);
   };
 
   return (

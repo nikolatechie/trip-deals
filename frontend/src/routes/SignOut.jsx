@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { PATH } from "../data/constants.js";
 import { signOut } from "../services/authService.js";
 
 export default function SignOut() {
@@ -19,5 +20,5 @@ export default function SignOut() {
     handleSignOut();
   }, []);
 
-  return isSignedOut ? <Navigate to='/' /> : null;
+  return isSignedOut ? <Navigate to={PATH.HOME_PAGE} /> : null;
 }

@@ -1,8 +1,9 @@
 import { API_URL } from "../config/backendConfig.js";
+import { API_PATH } from "../data/constants.js";
 
 export const fetchMessages = async () => {
   try {
-    const response = await fetch(`${API_URL}/contact`, {
+    const response = await fetch(`${API_URL}${API_PATH.CONTACT}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +24,7 @@ export const fetchMessages = async () => {
 
 export const sendMessage = async (body) => {
   try {
-    const response = await fetch(`${API_URL}/contact`, {
+    const response = await fetch(`${API_URL}${API_PATH.CONTACT}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +45,7 @@ export const sendMessage = async (body) => {
 
 export const removeMessage = async (id) => {
   try {
-    const response = await fetch(`${API_URL}/contact`, {
+    const response = await fetch(`${API_URL}${API_PATH.CONTACT}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

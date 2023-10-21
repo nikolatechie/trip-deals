@@ -1,8 +1,9 @@
 import { API_URL } from "../config/backendConfig.js";
+import { API_PATH } from "../data/constants.js";
 
 export const fetchHomePageData = async () => {
   try {
-    const response = await fetch(`${API_URL}/home_page`, {
+    const response = await fetch(`${API_URL}${API_PATH.HOME}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

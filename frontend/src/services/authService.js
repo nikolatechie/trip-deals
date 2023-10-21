@@ -1,8 +1,9 @@
 import { API_URL } from "../config/backendConfig.js";
+import { API_PATH } from "../data/constants.js";
 
 export const register = async (body) => {
   try {
-    const response = await fetch(`${API_URL}/register`, {
+    const response = await fetch(`${API_URL}${API_PATH.REGISTRATION}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +25,7 @@ export const register = async (body) => {
 
 export const signIn = async (body) => {
   try {
-    const response = await fetch(`${API_URL}/sign_in`, {
+    const response = await fetch(`${API_URL}${API_PATH.SIGN_IN}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +47,7 @@ export const signIn = async (body) => {
 
 export const signOut = async () => {
   try {
-    const response = await fetch(`${API_URL}/sign_out`, {
+    const response = await fetch(`${API_URL}${API_PATH.SIGN_OUT}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,8 +1,9 @@
 import { API_URL } from "../config/backendConfig.js";
+import { API_PATH } from "../data/constants.js";
 
 export const bookDeal = async (body) => {
   try {
-    const response = await fetch(`${API_URL}/trip_booking`, {
+    const response = await fetch(`${API_URL}${API_PATH.TRIP_BOOKING}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +24,7 @@ export const bookDeal = async (body) => {
 
 export const fetchBookings = async () => {
   try {
-    const response = await fetch(`${API_URL}/trip_booking`, {
+    const response = await fetch(`${API_URL}${API_PATH.TRIP_BOOKING}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +49,7 @@ export const fetchBookings = async () => {
 export const fetchDeals = async (formData) => {
   try {
     const response = await fetch(
-      `${API_URL}/trip_deals/?destination=${formData.destination}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&travelers=${formData.travelers}&maxPrice=${formData.maxPrice}&displayAll=${formData.displayAll}`,
+      `${API_URL}${API_PATH.TRIP_DEALS}/?destination=${formData.destination}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&travelers=${formData.travelers}&maxPrice=${formData.maxPrice}&displayAll=${formData.displayAll}`,
       {
         method: "GET",
         headers: {
@@ -71,7 +72,7 @@ export const fetchDeals = async (formData) => {
 
 export const createDeal = async (body) => {
   try {
-    const response = await fetch(`${API_URL}/trip_deals`, {
+    const response = await fetch(`${API_URL}${API_PATH.TRIP_DEALS}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +93,7 @@ export const createDeal = async (body) => {
 
 export const updateDeal = async (body) => {
   try {
-    const response = await fetch(`${API_URL}/trip_deals`, {
+    const response = await fetch(`${API_URL}${API_PATH.TRIP_DEALS}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +114,7 @@ export const updateDeal = async (body) => {
 
 export const removeDeal = async (id) => {
   try {
-    const response = await fetch(`${API_URL}/trip_deals`, {
+    const response = await fetch(`${API_URL}${API_PATH.TRIP_DEALS}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

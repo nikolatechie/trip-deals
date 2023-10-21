@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { bookDeal } from "../services/dealService";
+import { PATH } from "../data/constants.js";
 import styles from "../styles/form.module.css";
 
 export default function BookDealPage() {
@@ -40,7 +41,7 @@ export default function BookDealPage() {
       alert(response.errorMessage);
     } else {
       alert("The trip has been booked successfully!");
-      navigate("/bookings");
+      navigate(PATH.BOOKINGS_PAGE);
     }
   };
 

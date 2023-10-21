@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { getCurrentDate } from "../helpers/date";
+import { PATH } from "../data/constants.js";
 import styles from "../styles/form.module.css";
 
 export default function DealsPage() {
@@ -27,7 +28,7 @@ export default function DealsPage() {
     };
     data["displayAll"] = displayAll;
     const dataParam = encodeURIComponent(JSON.stringify(data));
-    navigate(`/show-deals/?data=${dataParam}`);
+    navigate(`${PATH.SHOW_DEALS_PAGE}/?data=${dataParam}`);
   };
 
   const handleSearch = (e) => {

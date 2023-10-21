@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { USER_ROLE } from "../data/constants.js";
+import { USER_ROLE, PATH } from "../data/constants.js";
 import { getUserRole } from "../helpers/auth.js";
 import styles from "../styles/navbar.module.css";
 
@@ -16,7 +16,7 @@ export default function NavBar() {
         <div className={styles.navbarContent}>
           <div>
             <h2>
-              <a href='/'>TripDeals</a>
+              <a href={PATH.HOME_PAGE}>TripDeals</a>
             </h2>
           </div>
           <div>
@@ -24,42 +24,42 @@ export default function NavBar() {
               {userRole === USER_ROLE.ADMIN && (
                 <>
                   <li>
-                    <a href='/new-deal'>New deal</a>
+                    <a href={PATH.NEW_DEAL_PAGE}>New deal</a>
                   </li>
                   <li>
-                    <a href='/new-article'>New article</a>
+                    <a href={PATH.NEW_ARTICLE_PAGE}>New article</a>
                   </li>
                 </>
               )}
               {userRole !== USER_ROLE.UNAUTHENTICATED && (
                 <li>
-                  <a href='/bookings'>Bookings</a>
+                  <a href={PATH.BOOKINGS_PAGE}>Bookings</a>
                 </li>
               )}
               <li>
-                <a href='/'>Home</a>
+                <a href={PATH.HOME_PAGE}>Home</a>
               </li>
               <li>
-                <a href='/search-deals'>Deals</a>
+                <a href={PATH.SEARCH_DEALS_PAGE}>Deals</a>
               </li>
               <li>
-                <a href='/news'>News</a>
+                <a href={PATH.NEWS_PAGE}>News</a>
               </li>
               <li>
-                <a href='/contact'>Contact</a>
+                <a href={PATH.CONTACT_PAGE}>Contact</a>
               </li>
               {userRole === USER_ROLE.UNAUTHENTICATED ? (
                 <>
                   <li>
-                    <a href='/register'>Register</a>
+                    <a href={PATH.REGISTRATION_PAGE}>Register</a>
                   </li>
                   <li>
-                    <a href='/sign-in'>Sign in</a>
+                    <a href={PATH.SIGN_IN_PAGE}>Sign in</a>
                   </li>
                 </>
               ) : (
                 <li>
-                  <a href='/sign-out'>Sign out</a>
+                  <a href={PATH.SIGN_OUT_PAGE}>Sign out</a>
                 </li>
               )}
             </ul>

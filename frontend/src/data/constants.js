@@ -4,7 +4,7 @@ export const USER_ROLE = {
   CUSTOMER: "customer",
 };
 
-// Paths
+// Frontend paths
 export const PATH = {
   HOME_PAGE: "/",
   REGISTRATION_PAGE: "/register",
@@ -22,4 +22,17 @@ export const PATH = {
   CONTACT_PAGE: "/contact",
   UNAUTHORISED_PAGE: "/unauthorised",
   ERROR_PAGE: "*",
+};
+
+// API paths
+export const API_PATH = {
+  REGISTRATION: "/register",
+  SIGN_IN: "/sign_in",
+  SIGN_OUT: "/sign_out",
+  CONTACT: "/contact",
+  HOME: "/home_page",
+  TRAVEL_NEWS: "/travel_news",
+  ARTICLE_IMAGE: "/article_image",
+  TRIP_DEALS: "/trip_deals",
+  TRIP_BOOKING: "/trip_booking",
 };

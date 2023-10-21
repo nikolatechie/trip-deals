@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { USER_ROLE } from "../data/constants.js";
+import { USER_ROLE, PATH } from "../data/constants.js";
 import { getUserRole } from "../helpers/auth.js";
 import styles from "../styles/deal-card.module.css";
 
@@ -13,7 +13,11 @@ export default function DealCard(props) {
   }, []);
 
   const handleBook = () => {
-    navigate(`/book-deal/?data=${encodeURIComponent(JSON.stringify(props))}`);
+    navigate(
+      `${PATH.BOOK_DEAL_PAGE}/?data=${encodeURIComponent(
+        JSON.stringify(props)
+      )}`
+    );
   };
 
   const handleEdit = () => {
@@ -25,7 +29,7 @@ export default function DealCard(props) {
       price: props.price,
     };
     const dataParam = encodeURIComponent(JSON.stringify(data));
-    navigate(`/edit-deal/?data=${dataParam}`);
+    navigate(`${PATH.EDIT_DEAL_PAGE}/?data=${dataParam}`);
   };
 
   return (

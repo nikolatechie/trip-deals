@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { signIn } from "../services/authService";
+import { PATH } from "../data/constants.js";
 import styles from "../styles/form.module.css";
 
 export default function SignInPage() {
@@ -22,7 +23,7 @@ export default function SignInPage() {
     } else {
       localStorage.setItem("username", state.username);
       localStorage.setItem("role", response.role);
-      navigate("/");
+      navigate(PATH.HOME_PAGE);
     }
   };
 
