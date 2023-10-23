@@ -3,12 +3,14 @@ import NavBar from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { bookDeal } from "../services/dealService";
 import { PATH } from "../data/constants.js";
+import { getDiffDays } from "../helpers/date.js";
 import styles from "../styles/form.module.css";
 
 export default function BookDealPage() {
   const navigate = useNavigate();
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0.0);
   const [booking, setBooking] = useState({
     id: undefined,
     destination: "",
@@ -29,8 +31,21 @@ export default function BookDealPage() {
     }
   }, []);
 
+  useEffect(() => {
+    // Update total price
+    const days = getDiffDays(
+      new Date(booking.fromDate),
+      new Date(booking.toDate)
+    );
+    const total = booking.travelers * days * booking.price;
+    setTotalPrice(total > 0.0 ? total : 0.0);
+  }, [booking.fromDate, booking.toDate, booking.travelers, booking.price]);
+
   const confirmBooking = async (e) => {
     e.preventDefault();
+    if (!window.confirm("Click OK to confirm your booking!")) {
+      return;
+    }
     const response = await bookDeal({
       id: booking.id,
       fromDate: booking.fromDate,
@@ -116,6 +131,7 @@ export default function BookDealPage() {
               })
             }
           />
+          <h2>Total Price: £{parseFloat(totalPrice).toFixed(2)}</h2>
           <div className={styles.btnContainer}>
             <button className={styles.btn} type='submit'>
               Confirm
