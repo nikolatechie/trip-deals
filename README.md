@@ -41,5 +41,6 @@ Welcome to the Trip Deals project! This web application is built using **React.j
 - PHP
 - MySQL
 - RSS Feed (XML Parsing)
+- Router: React Router library and manually-created PHP router
 
 Happy traveling!
